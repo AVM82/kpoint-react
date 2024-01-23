@@ -1,7 +1,7 @@
-const { APP_API_ORIGIN_URL } = process.env;
+const { REACT_APP_API_PATH } = process.env;
 
 const ENV = {
-  API_PATH: APP_API_ORIGIN_URL ?? '',
+  API_PATH: REACT_APP_API_PATH ?? '',
 } as const;
 
 export { ENV };
