@@ -14,7 +14,7 @@ const App: FC = () => {
     }));
   }, []);
 
-  const { project  } = useAppSelector(({ project  }) => ({
+  const { project } = useAppSelector(({ project }) => ({
     project: project.project,
   }));
 
