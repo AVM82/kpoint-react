@@ -3,7 +3,7 @@ import { projectAction } from 'store/actions';
 
 import { useAppDispatch } from '../../hooks/hooks';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector.hook';
-import styles from './style.module.scss';
+import { ProjectPage } from './project-page';
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
@@ -18,9 +18,17 @@ const App: FC = () => {
     project: project.project,
   }));
 
-  return <h1 className={styles.h1}>{
-    project?.id ?? 'No data'
-  }</h1>;
+  return (
+    <div>
+      {project ? (
+        <ProjectPage
+          project={project}
+          allStatuses={['NEW', 'GATHERING FOR START', 'EARNING', 'SUSPENDED', 'FAILED', 'SUCCESSFUL']} />
+      ) : (
+        <p>No data</p>
+      )}
+    </div>
+  );
 };
 
 export { App };
