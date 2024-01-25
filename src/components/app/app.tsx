@@ -21,10 +21,6 @@ const App: FC = () => {
   return <h1 className={styles.h1}>{
     project?.id ?? 'No data'
   }</h1>;
-//   return (
-//     <div>
-//       <h1 className={styles.h1}>Проекти</h1>
-//     </div>);
 };
 
 export { App };

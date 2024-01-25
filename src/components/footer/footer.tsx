@@ -9,8 +9,12 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Footer: FC = () => {
+
+  const { t } = useTranslation();
+
   return (
     <Container maxWidth="xl" sx={{ bgcolor: 'lightgray', paddingBottom: 5 }}>
       <Grid container
@@ -33,7 +37,7 @@ const Footer: FC = () => {
         direction="row"
         justifyContent="space-between"
         alignItems="center">
-        <Grid item><Typography variant="body1">All rights reserved</Typography></Grid>
+        <Grid item><Typography variant="body1">{t('footer_sign')}</Typography></Grid>
         <Grid item>
           <Link  href="#" underline="none" color="black" sx={{ margin: 1 }}>Eleven</Link>
           <Link  href="#" underline="none" color="black" sx={{ margin: 1 }}>Twelve</Link>
