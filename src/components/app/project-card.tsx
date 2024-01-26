@@ -6,7 +6,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import React, { FC } from 'react';
 
 const ProjectCard: FC = () => {
 
@@ -31,6 +30,7 @@ const ProjectCard: FC = () => {
       <CardActions>
         <Button size="small">{t('share_button')}</Button>
         <Button size="small" href="/projects/1">{t('learn_more_button')}</Button>
+        {/*there is link to next page, <1> will bw retrieved dynamically */}
       </CardActions>
     </Card>);
 };

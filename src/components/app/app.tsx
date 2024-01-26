@@ -23,7 +23,7 @@ const App: FC = () => {
       {project ? (
         <ProjectPage
           project={project}
-          allStatuses={['NEW', 'GATHERING FOR START', 'EARNING', 'SUSPENDED', 'FAILED', 'SUCCESSFUL']} />
+          allStatuses={['NEW', 'GATHERING_FOR_START', 'EARNING', 'SUSPENDED', 'FAILED', 'SUCCESSFUL']} />
       ) : (
         <p>No data</p>
       )}
