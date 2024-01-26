@@ -1,6 +1,6 @@
 import { projectReducer as project } from './progects/reducer';
 
-const rootReducer = { project };
+const rootReducer = {  project };
 
 export { rootReducer };
 

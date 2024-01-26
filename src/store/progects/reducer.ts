@@ -1,15 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ProjectsType } from 'common/types/types';
 
-import { getById } from './actions';
+import { getAllProjects, getById } from './actions';
 
 type State={
   project: ProjectsType | null,
-
+  projects: ProjectsType[],
 };
 
 const initialState: State = {
   project: null,
+  projects: [],
 };
 
 const projectSlice = createSlice({
@@ -23,6 +24,12 @@ const projectSlice = createSlice({
       })
       .addCase(getById.fulfilled, (state, { payload }) => {
         state.project = payload;
+      })
+      .addCase(getAllProjects.rejected, (state ) => {
+        state.projects = [];
+      })
+      .addCase(getAllProjects.fulfilled, (state, { payload }) => {
+        state.projects = payload;
       });
   },
 });
