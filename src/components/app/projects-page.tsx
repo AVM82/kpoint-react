@@ -3,15 +3,19 @@ import Pagination from '@mui/material/Pagination';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { ProjectCard } from './project-card';
 import styles from './style.module.scss';
 
 const ProjectsPage: FC = () => {
+
+  const { t } = useTranslation();
+
   return (
     <div className={styles.div}>
-      <Typography variant="h3" align="center">Проекти</Typography>
-      <TextField label="Search Field" sx={{ margin: 2, display: 'flex', justifyContent: 'center' }}></TextField>
+      <Typography variant="h3" align="center">{t('projects')}</Typography>
+      <TextField label={t('search_field')} sx={{ margin: 2, display: 'flex', justifyContent: 'center' }}></TextField>
       <Grid container spacing={5} direction="column" justifyContent="center" alignItems="center">
         <Grid container item spacing={5} direction="row" justifyContent="center" alignItems="center">
           <Grid item>
