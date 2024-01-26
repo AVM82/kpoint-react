@@ -15,6 +15,7 @@ const ProjectsPage: FC = () => {
 
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const maxPageElementIndex = 3;
 
   useEffect(() => {
     dispatch(projectAction.getAllProjects());
@@ -24,49 +25,16 @@ const ProjectsPage: FC = () => {
     projects: project.projects,
   }));
 
-  console.log(projects);
-
   return (
     <div className={styles.div}>
       <Typography variant="h3" align="center">{t('projects')}</Typography>
       <TextField label={t('search_field')} sx={{ margin: 2, display: 'flex', justifyContent: 'center' }}></TextField>
-      <Typography  variant="h3" align="center">
-
-      </Typography>
-      <Grid container spacing={5} direction="column" justifyContent="center" alignItems="center">
-        <Grid container item spacing={5} direction="row" justifyContent="center" alignItems="center">
+      <Grid container spacing={5} direction="row" justifyContent="center" alignItems="center">
+        {projects.slice(0,maxPageElementIndex).map((project) =>
           <Grid item>
-            <ProjectCard/>
-          </Grid>
-          <Grid item>
-            <ProjectCard/>
-          </Grid>
-          <Grid item>
-            <ProjectCard/>
-          </Grid>
-        </Grid>
-        <Grid container item spacing={5} direction="row" justifyContent="center" alignItems="center">
-          <Grid item>
-            <ProjectCard/>
-          </Grid>
-          <Grid item>
-            <ProjectCard/>
-          </Grid>
-          <Grid item>
-            <ProjectCard/>
-          </Grid>
-        </Grid>
-        <Grid container item spacing={5} direction="row" justifyContent="center" alignItems="center">
-          <Grid item>
-            <ProjectCard/>
-          </Grid>
-          <Grid item>
-            <ProjectCard/>
-          </Grid>
-          <Grid item>
-            <ProjectCard/>
-          </Grid>
-        </Grid>
+            <ProjectCard project_id={project.projectId} title={project.title}
+              summary={project.summary} logoImgUrl={project.logoImgUrl}/>
+          </Grid>)}
       </Grid>
       <Pagination count={10} showFirstButton showLastButton
         sx={{ margin: 2, display: 'flex', justifyContent: 'center' }} />

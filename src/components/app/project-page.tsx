@@ -51,7 +51,7 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
 
   return (
     <Card sx={{ maxWidth: '100%' }}>
-      <CardMedia sx={{ height: 140 }} image={project.logo} title={project.title} />
+      <CardMedia sx={{ height: 140 }} image={project.logoImgUrl} title={project.title} />
       <Link href="#" underline="none" color="black">
         <YouTubeIcon sx={{ margin: 1 }} />
       </Link>
@@ -78,7 +78,7 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
           {t('owner')}: {project.owner}
         </Typography>
       </CardContent>
-      <CustomTimeline allStatuses={allStatuses} currentStatus={project.status} />
+      <CustomTimeline allStatuses={allStatuses} currentStatus={project.state} />
       <Fab variant="extended">
         <NavigationIcon sx={{ mr: 1 }} />
         {t('buttons.location')}

@@ -7,7 +7,14 @@ import Typography from '@mui/material/Typography';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const ProjectCard: FC = () => {
+interface ProjectsProps {
+  project_id: string;
+  title: string;
+  summary: string
+  logoImgUrl: string
+}
+
+const ProjectCard: FC<ProjectsProps> = ({ project_id, title, summary, logoImgUrl }) => {
 
   const { t } = useTranslation();
 
@@ -15,22 +22,22 @@ const ProjectCard: FC = () => {
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         sx={{ height: 140 }}
-        image="/static/images/cards/contemplative-reptile.jpg"
-        title="green iguana"
+        image={ logoImgUrl }
+        title={ title }
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          { title }
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+          { summary }
         </Typography>
       </CardContent>
       <CardActions>
         <Button size="small">{t('share_button')}</Button>
-        <Button size="small" href="/projects/1">{t('learn_more_button')}</Button>
-        {/*there is link to next page, <1> will bw retrieved dynamically */}
+        <Button size="small" href={'projects/'.concat(project_id)}>
+          {t('learn_more_button')}
+        </Button>
       </CardActions>
     </Card>);
 };

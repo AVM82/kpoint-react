@@ -1,13 +1,13 @@
 export type ProjectsType = {
-  id: string,
+  projectId: string,
   title: string,
   summary: string,
   owner: string
   description: string,
-  logo: string,
+  logoImgUrl: string,
   geoCoordinates: string,
-  creationDate: string,
-  status: string,
+  createdAt: string,
+  state: string,
   ownerSum: number,
   collectedSum: number,
   startSum: number,
