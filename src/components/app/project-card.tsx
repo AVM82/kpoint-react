@@ -4,9 +4,14 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import React, { FC } from 'react';
 
 const ProjectCard: FC = () => {
+
+  const { t } = useTranslation();
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -24,8 +29,8 @@ const ProjectCard: FC = () => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small" href="/projects/1">Learn more</Button>
+        <Button size="small">{t('share_button')}</Button>
+        <Button size="small" href="/projects/1">{t('learn_more_button')}</Button>
       </CardActions>
     </Card>);
 };
