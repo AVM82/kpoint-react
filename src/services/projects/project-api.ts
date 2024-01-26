@@ -26,6 +26,14 @@ class ProjectApi {
       },
     );
   }
+
+  public getAllProjects(): Promise<ProjectsType[]> {
+    return this.#http.load(
+      `${this.#apiPrefix}/projects`, {
+        method: HttpMethod.GET,
+      },
+    );
+  }
 }
 
 export { ProjectApi };
