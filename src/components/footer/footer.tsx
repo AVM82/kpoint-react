@@ -9,8 +9,12 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Footer: FC = () => {
+
+  const { t } = useTranslation();
+
   return (
     <Container maxWidth="xl" sx={{ bgcolor: 'lightgray', paddingBottom: 5 }}>
       <Grid container
@@ -21,11 +25,11 @@ const Footer: FC = () => {
           <Typography variant="h6" align="center">KEY POINTS</Typography>
         </Grid>
         <Grid item>
-          <Link  href="#" underline="none" color="black"><YouTubeIcon sx={{ margin: 1 }}></YouTubeIcon></Link>
-          <Link  href="#" underline="none" color="black"><FacebookIcon sx={{ margin: 1 }}></FacebookIcon></Link>
-          <Link  href="#" underline="none" color="black"><TwitterIcon sx={{ margin: 1 }}></TwitterIcon></Link>
-          <Link  href="#" underline="none" color="black"><InstagramIcon sx={{ margin: 1 }}></InstagramIcon></Link>
-          <Link  href="#" underline="none" color="black"><LinkedInIcon sx={{ margin: 1 }}></LinkedInIcon></Link>
+          <Link  href="#" underline="none" color="black"><YouTubeIcon sx={{ margin: 1 }}/></Link>
+          <Link  href="#" underline="none" color="black"><FacebookIcon sx={{ margin: 1 }}/></Link>
+          <Link  href="#" underline="none" color="black"><TwitterIcon sx={{ margin: 1 }}/></Link>
+          <Link  href="#" underline="none" color="black"><InstagramIcon sx={{ margin: 1 }}/></Link>
+          <Link  href="#" underline="none" color="black"><LinkedInIcon sx={{ margin: 1 }}/></Link>
         </Grid>
       </Grid>
       <Divider variant="fullWidth" orientation="horizontal" sx={{ bgcolor: 'black', marginTop: 1, marginBottom: 3 }}/>
@@ -33,7 +37,7 @@ const Footer: FC = () => {
         direction="row"
         justifyContent="space-between"
         alignItems="center">
-        <Grid item><Typography variant="body1">All rights reserved</Typography></Grid>
+        <Grid item><Typography variant="body1">{t('footer_sign')}</Typography></Grid>
         <Grid item>
           <Link  href="#" underline="none" color="black" sx={{ margin: 1 }}>Eleven</Link>
           <Link  href="#" underline="none" color="black" sx={{ margin: 1 }}>Twelve</Link>
