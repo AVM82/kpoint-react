@@ -18,7 +18,7 @@ import { authAction } from '../../store/actions';
 
 const defaultTheme = createTheme();
 
-const SignUp: FC = () => {
+const SignUpPage: FC = () => {
   const dispatch = useAppDispatch();
 
   const [formData, setFormData] = useState<SignUpType>({
@@ -193,4 +193,4 @@ const SignUp: FC = () => {
   );
 };
 
-export { SignUp };
+export { SignUpPage };

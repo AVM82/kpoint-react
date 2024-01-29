@@ -7,8 +7,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { store } from 'store/store';
 
 import { ProjectsPage } from './components/app/projects-page';
-import { SignIn } from './components/app/sign-in';
-import { SignUp } from './components/app/sign-up';
+import { SignInPage } from './components/auth-page/sign-in-page';
+import { SignUpPage } from './components/auth-page/sign-up-page';
 import { Toast } from './components/common/common';
 import { Footer } from './components/footer/footer';
 import { Header } from './components/header/header';
@@ -24,8 +24,8 @@ root.render(
         <Routes>
           <Route path="/" element={<ProjectsPage/>}/>
           <Route path="projects/1" element={<ProjectDetailsPage/>}/>
-          <Route path="/sign-in" element={<SignIn/>}/>
-          <Route path="/sign-up" element={<SignUp/>}/>
+          <Route path="/sign-in" element={<SignInPage/>}/>
+          <Route path="/sign-up" element={<SignUpPage/>}/>
         </Routes>
       </BrowserRouter>
       <Footer/>

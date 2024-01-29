@@ -20,7 +20,7 @@ import { useAppDispatch } from '../../hooks/hooks';
 
 const defaultTheme = createTheme();
 
-const SignIn: FC = () => {
+const SignInPage: FC = () => {
   const dispatch = useAppDispatch();
 
   const [formData, setFormData] = useState<SignInType>({
@@ -127,4 +127,4 @@ const SignIn: FC = () => {
   );
 };
 
-export { SignIn };
+export { SignInPage };
