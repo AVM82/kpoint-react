@@ -1,5 +1,5 @@
 import { HttpMethod } from 'common/enums/http/http-method.enum';
-import { ProjectsType } from 'common/types/types';
+import { ProjectsPageType, ProjectsType } from 'common/types/types';
 
 import { Http } from '../http/http.service';
 
@@ -27,7 +27,7 @@ class ProjectApi {
     );
   }
 
-  public getAllProjects(): Promise<ProjectsType[]> {
+  public getAllProjects(): Promise<ProjectsPageType> {
     return this.#http.load(
       `${this.#apiPrefix}/projects`, {
         method: HttpMethod.GET,
