@@ -1,5 +1,5 @@
 import { HttpMethod } from 'common/enums/http/http-method.enum';
-import { ProjectType } from 'common/types/types';
+import { ProjectsPageType, ProjectType } from 'common/types/types';
 
 import { Http } from '../http/http.service';
 
@@ -23,6 +23,18 @@ class ProjectApi {
     return this.#http.load(
       `${this.#apiPrefix}/projects/${payload.id}`, {
         method: HttpMethod.GET,
+      },
+    );
+  }
+
+  public getAllProjects(payload:{ size: number, number: number }): Promise<ProjectsPageType> {
+    return this.#http.load(
+      `${this.#apiPrefix}/projects?size=${payload.size}&number=${payload.number}`, {
+        method: HttpMethod.GET,
+        queryString: {
+          size: payload.size,
+          page: payload.number,
+        },
       },
     );
   }
