@@ -8,6 +8,8 @@ import { store } from 'store/store';
 
 import { App } from './components/app/app';
 import { ProjectsPage } from './components/app/projects-page';
+import { SignIn } from './components/app/sign-in';
+import { SignUp } from './components/app/sign-up';
 import { Toast } from './components/common/common';
 import { Footer } from './components/footer/footer';
 import { Header } from './components/header/header';
@@ -22,6 +24,8 @@ root.render(
         <Routes>
           <Route path="/" element={<ProjectsPage/>}/>
           <Route path="projects/1" element={<App/>}/>
+          <Route path="sign-in" element={<SignIn/>}/>
+          <Route path="sign-up" element={<SignUp/>}/>
         </Routes>
       </BrowserRouter>
       <Footer/>

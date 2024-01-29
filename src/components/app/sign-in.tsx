@@ -115,7 +115,7 @@ const SignIn: FC = () => {
               </Button>
               <Grid item>
                 Ще немає облікового запису?
-                <Link href="#" variant="body2" sx={{ ml: 3 }}>
+                <Link href="sign-up" variant="body2" sx={{ ml: 3 }}>
                   {'Зареєструватися'}
                 </Link>
               </Grid>
