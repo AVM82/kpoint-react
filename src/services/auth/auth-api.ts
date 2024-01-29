@@ -1,5 +1,7 @@
 import { HttpMethod } from 'common/enums/http/http-method.enum';
 
+import { ContentType } from '../../common/enums/file/content-type.enum';
+import { SignInType } from '../../common/types/sign-in/sign-in';
 import { Http } from '../http/http.service';
 
 type Constructor = {
@@ -17,13 +19,11 @@ class AuthApi {
     this.#apiPrefix = apiPrefix;
   }
 
-  public login(payload: { id: number }): Promise<string> {
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
-    const body = JSON.stringify({ email, password });
-
+  public login(payload: SignInType): Promise<string> {
     return this.#http.load(`${this.#apiPrefix}/auth/login`, {
-      method: HttpMethod.GET,
+      method: HttpMethod.POST,
+      contentType: ContentType.JSON,
+      payload: JSON.stringify(payload),
     });
   }
 }

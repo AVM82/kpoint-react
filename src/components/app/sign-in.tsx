@@ -12,21 +12,27 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { authAction } from 'store/actions';
+
+import { SignInType } from '../../common/types/sign-in/sign-in';
+import { useAppDispatch } from '../../hooks/hooks';
 
 const defaultTheme = createTheme();
 
 const SignIn: FC = () => {
-  /*const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<SignInType>({
     email: '',
     password: '',
   });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-    dispatch(authAction.login(1));
-  };*/
+    event.preventDefault();
+    console.log(formData.email, formData.password);
+    dispatch(authAction.login(formData));
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -49,9 +55,9 @@ const SignIn: FC = () => {
           <Typography>Увійдіть, щоб продовжити</Typography>
           <Box
             component="form"
-            // onSubmit={handleSubmit}
             noValidate
             sx={{ mt: 1 }}
+            onSubmit={handleSubmit}
           >
             <TextField
               margin="normal"
@@ -60,8 +66,12 @@ const SignIn: FC = () => {
               id="email"
               label="Email Address"
               name="email"
-              // value={formData.email}
+              value={formData.email}
               autoComplete="email"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>): void => {
+                event.preventDefault();
+                setFormData({ ...formData, email: event.target.value });
+              }}
               autoFocus
             />
             <TextField
@@ -72,8 +82,12 @@ const SignIn: FC = () => {
               label="Password"
               type="password"
               id="password"
-              // value={formData.password}
+              value={formData.password}
               autoComplete="current-password"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>): void => {
+                event.preventDefault();
+                setFormData({ ...formData, password: event.target.value });
+              }}
             />
             <Grid container alignItems="center" justifyContent="space-between">
               <Grid item>
