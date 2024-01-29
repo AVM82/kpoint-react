@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AsyncThunkConfig } from 'common/types/app/async-thunk-config.type';
 
-import { ProjectsType } from '../../common/types/projects/projects.type';
+import { ProjectType } from '../../common/types/projects/project.type';
 import { ActionType } from './common';
 
-const getById = createAsyncThunk<ProjectsType, { id: number }, AsyncThunkConfig>(
+const getById = createAsyncThunk<ProjectType, { id: number }, AsyncThunkConfig>(
   ActionType.GET_BY_ID,
   async (payload, { extra }) => {
     const { projectApi } = extra;

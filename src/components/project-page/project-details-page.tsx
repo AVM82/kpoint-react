@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector.hook';
 import { ProjectPage } from './project-page';
 
-const App: FC = () => {
+const ProjectDetailsPage: FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -31,4 +31,4 @@ const App: FC = () => {
   );
 };
 
-export { App };
+export { ProjectDetailsPage };

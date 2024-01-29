@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ProjectsType } from 'common/types/types';
+import { ProjectType } from 'common/types/types';
 
 import { getById } from './actions';
 
 type State={
-  project: ProjectsType | null,
+  project: ProjectType | null,
 
 };
 
