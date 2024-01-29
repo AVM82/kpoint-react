@@ -35,14 +35,13 @@ const SignIn: FC = () => {
     });
   };
 
-  const emailOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault();
-    setFormData({ ...formData, email: event.target.value });
-  };
-
-  const passwordOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    event.preventDefault();
-    setFormData({ ...formData, password: event.target.value });
+    const { name, value } = event.target;
+    setFormData((formData) => ({
+      ...formData,
+      [name]: value,
+    }));
   };
 
   return (
@@ -79,7 +78,7 @@ const SignIn: FC = () => {
               name="email"
               value={formData.email}
               autoComplete="email"
-              onChange={emailOnChange}
+              onChange={handleOnChange}
               autoFocus
             />
             <TextField
@@ -92,7 +91,7 @@ const SignIn: FC = () => {
               id="password"
               value={formData.password}
               autoComplete="current-password"
-              onChange={passwordOnChange}
+              onChange={handleOnChange}
             />
             <Grid container alignItems="center" justifyContent="space-between">
               <Grid item>
