@@ -2,8 +2,8 @@ import { HttpMethod } from 'common/enums/http/http-method.enum';
 
 import { ContentType } from '../../common/enums/file/content-type.enum';
 import { SignInType } from '../../common/types/sign-in/sign-in';
-import { Http } from '../http/http.service';
 import { SignUpType } from '../../common/types/sign-up/sign-up';
+import { Http } from '../http/http.service';
 
 type Constructor = {
   http: Http;
@@ -22,6 +22,7 @@ class AuthApi {
 
   public register(payload: SignUpType): Promise<string> {
     console.log(payload);
+
     return this.#http.load(`${this.#apiPrefix}/auth/register`, {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,

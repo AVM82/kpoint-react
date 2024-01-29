@@ -11,9 +11,10 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { FC, useState } from 'react';
+
+import { SignUpType } from '../../common/types/sign-up/sign-up';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch.hook';
 import { authAction } from '../../store/actions';
-import { SignUpType } from '../../common/types/sign-up/sign-up';
 
 const defaultTheme = createTheme();
 
