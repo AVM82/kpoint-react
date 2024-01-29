@@ -2,4 +2,4 @@ export { type AppDispatch, type AsyncThunkConfig, type RootState } from './app/a
 export { type HttpErrorDto, type HttpOptions } from './http/http';
 export { type NotificationPayload } from './notification/notification';
 export { type CitiesType,type GetAllProjectsType,type ProjectsEditType,
-  type ProjectsPageType,type ProjectsType,type ProjectType } from './projects/projects';
+  type ProjectsPageType,type ProjectType } from './projects/projects';

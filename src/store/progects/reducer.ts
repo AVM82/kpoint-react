@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ProjectsEditType, ProjectsPageType, ProjectsType } from 'common/types/types';
+import { ProjectsEditType, ProjectsPageType } from 'common/types/types';
 
 import { ProjectType } from '../../common/types/projects/project.type';
 import { createNew, getAllProjects, getById } from './actions';

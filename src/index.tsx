@@ -13,6 +13,7 @@ import { Toast } from './components/common/common';
 import { Footer } from './components/footer/footer';
 import { Header } from './components/header/header';
 import { ProjectDetailsPage } from './components/project-page/project-details-page';
+import { ProjectCreate } from './components/projects/project-create/project-create';
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
 
@@ -24,6 +25,7 @@ root.render(
         <Routes>
           <Route path="/" element={<ProjectsPage/>}/>
           <Route path="projects/1" element={<ProjectDetailsPage/>}/>
+          <Route path="/projects/new" element={<ProjectCreate/>}/>
           <Route path="/sign-in" element={<SignInPage/>}/>
           <Route path="/sign-up" element={<SignUpPage/>}/>
         </Routes>
