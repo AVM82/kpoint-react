@@ -14,13 +14,14 @@ const getById = createAsyncThunk<ProjectsType, { id: number }, AsyncThunkConfig>
   },
 );
 
-const getAllProjects = createAsyncThunk<ProjectsPageType, void, AsyncThunkConfig>(
-  ActionType.GET_ALL_PROJECTS,
-  async (_, { extra }) => {
-    const { projectApi } = extra;
+const getAllProjects = createAsyncThunk<ProjectsPageType,
+  { size: number, number: number }, AsyncThunkConfig>(
+    ActionType.GET_ALL_PROJECTS,
+    async (payload, { extra }) => {
+      const { projectApi } = extra;
 
-    return projectApi.getAllProjects();
-  },
-);
+      return projectApi.getAllProjects(payload);
+    },
+  );
 
 export { getAllProjects,getById };

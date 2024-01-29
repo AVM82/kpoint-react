@@ -15,13 +15,13 @@ const ProjectsPage: FC = () => {
 
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const maxPageElements = 4;
-
-  useEffect(() => {
-    dispatch(projectAction.getAllProjects());
-  }, [dispatch]);
+  const maxPageElements = 2;
 
   const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    dispatch(projectAction.getAllProjects({ size: maxPageElements, number: (page - 1) }));
+  }, [dispatch, page]);
 
   const handleChange = (event: ChangeEvent<unknown>, value: number): void => {
     setPage(value);
@@ -36,7 +36,7 @@ const ProjectsPage: FC = () => {
       <Typography variant="h3" align="center">{t('projects')}</Typography>
       <TextField label={t('search_field')} sx={{ margin: 2, display: 'flex', justifyContent: 'center' }}></TextField>
       <Grid container spacing={20} direction="row" justifyContent="flex-start" alignItems="center">
-        {projects?.content.slice(maxPageElements * (page - 1), maxPageElements * page).map((project) =>
+        {projects?.content.map((project) =>
           <Grid item>
             <ProjectCard project_id={project.projectId} title={project.title}
               summary={project.summary} logoImgUrl={project.logoImgUrl}/>
