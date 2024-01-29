@@ -2,8 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AsyncThunkConfig } from 'common/types/app/async-thunk-config.type';
 
 import { SignInType } from '../../common/types/sign-in/sign-in';
-import { ActionType } from './common';
 import { SignUpType } from '../../common/types/sign-up/sign-up';
+import { ActionType } from './common';
 
 const login = createAsyncThunk<string, SignInType, AsyncThunkConfig>(
   ActionType.LOGIN,

@@ -51,7 +51,7 @@ const SignUp: FC = () => {
 
   const handleTagsChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const tagsInput = event.target.value;
-    const tagsArray = tagsInput.split(',').map(tag => tag.trim());
+    const tagsArray = tagsInput.split(',').map((tag) => tag.trim());
     setFormData({ ...formData, tags: tagsArray });
   };
 

@@ -1,6 +1,6 @@
 enum ActionType {
   LOGIN = 'login',
-  REGISTER = 'register'
+  REGISTER = 'register',
 }
 
 export { ActionType };
