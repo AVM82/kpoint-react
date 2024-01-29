@@ -25,11 +25,11 @@ const Footer: FC = () => {
           <Typography variant="h6" align="center">KEY POINTS</Typography>
         </Grid>
         <Grid item>
-          <Link  href="#" underline="none" color="black"><YouTubeIcon sx={{ margin: 1 }}></YouTubeIcon></Link>
-          <Link  href="#" underline="none" color="black"><FacebookIcon sx={{ margin: 1 }}></FacebookIcon></Link>
-          <Link  href="#" underline="none" color="black"><TwitterIcon sx={{ margin: 1 }}></TwitterIcon></Link>
-          <Link  href="#" underline="none" color="black"><InstagramIcon sx={{ margin: 1 }}></InstagramIcon></Link>
-          <Link  href="#" underline="none" color="black"><LinkedInIcon sx={{ margin: 1 }}></LinkedInIcon></Link>
+          <Link  href="#" underline="none" color="black"><YouTubeIcon sx={{ margin: 1 }}/></Link>
+          <Link  href="#" underline="none" color="black"><FacebookIcon sx={{ margin: 1 }}/></Link>
+          <Link  href="#" underline="none" color="black"><TwitterIcon sx={{ margin: 1 }}/></Link>
+          <Link  href="#" underline="none" color="black"><InstagramIcon sx={{ margin: 1 }}/></Link>
+          <Link  href="#" underline="none" color="black"><LinkedInIcon sx={{ margin: 1 }}/></Link>
         </Grid>
       </Grid>
       <Divider variant="fullWidth" orientation="horizontal" sx={{ bgcolor: 'black', marginTop: 1, marginBottom: 3 }}/>

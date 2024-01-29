@@ -49,7 +49,7 @@
       }
     ],
     "no-var": "error",
-    "no-console": "error",
+    "no-console": "warn",
     "arrow-parens": [
       "error",
       "always"
