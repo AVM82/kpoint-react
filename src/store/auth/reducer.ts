@@ -18,11 +18,9 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(login.rejected, (state ) => {
-        console.log('token is: ' + state.token);
         state.token = null;
       })
       .addCase(login.fulfilled, (state, { payload }) => {
-        console.log('token is: ' + state.token);
         state.token = payload;
       });
   },

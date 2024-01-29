@@ -30,8 +30,19 @@ const SignIn: FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    console.log(formData.email, formData.password);
-    dispatch(authAction.login(formData));
+    dispatch(authAction.login(formData)).then((token) => {
+      console.log(token.payload);
+    });
+  };
+
+  const emailOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    event.preventDefault();
+    setFormData({ ...formData, email: event.target.value });
+  };
+
+  const passwordOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    event.preventDefault();
+    setFormData({ ...formData, password: event.target.value });
   };
 
   return (
@@ -68,10 +79,7 @@ const SignIn: FC = () => {
               name="email"
               value={formData.email}
               autoComplete="email"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>): void => {
-                event.preventDefault();
-                setFormData({ ...formData, email: event.target.value });
-              }}
+              onChange={emailOnChange}
               autoFocus
             />
             <TextField
@@ -84,10 +92,7 @@ const SignIn: FC = () => {
               id="password"
               value={formData.password}
               autoComplete="current-password"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>): void => {
-                event.preventDefault();
-                setFormData({ ...formData, password: event.target.value });
-              }}
+              onChange={passwordOnChange}
             />
             <Grid container alignItems="center" justifyContent="space-between">
               <Grid item>
@@ -122,5 +127,4 @@ const SignIn: FC = () => {
     </ThemeProvider>
   );
 };
-
 export { SignIn };
