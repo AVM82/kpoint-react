@@ -17,12 +17,12 @@ import CardMedia from '@mui/material/CardMedia';
 import Fab from '@mui/material/Fab';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import { ProjectsType } from 'common/types/projects/projects.type';
-import { FC } from 'react';
+import { ProjectType } from 'common/types/projects/project.type';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface ProjectPageProps {
-  project: ProjectsType;
+  project: ProjectType;
   allStatuses: string[];
 }
 
@@ -51,7 +51,7 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
 
   return (
     <Card sx={{ maxWidth: '100%' }}>
-      <CardMedia sx={{ height: 140 }} image={project.logo} title={project.title} />
+      <CardMedia sx={{ height: 140 }} image={project.logoImgUrl} title={project.title} />
       <Link href="#" underline="none" color="black">
         <YouTubeIcon sx={{ margin: 1 }} />
       </Link>
@@ -74,11 +74,8 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
         <Typography variant="body2" color="text.secondary">
           {t('description')}: {project.description}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {t('owner')}: {project.owner}
-        </Typography>
       </CardContent>
-      <CustomTimeline allStatuses={allStatuses} currentStatus={project.status} />
+      <CustomTimeline allStatuses={allStatuses} currentStatus={project.state} />
       <Fab variant="extended">
         <NavigationIcon sx={{ mr: 1 }} />
         {t('buttons.location')}

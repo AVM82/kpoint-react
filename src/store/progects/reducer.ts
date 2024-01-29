@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ProjectsType } from 'common/types/types';
+import { ProjectsPageType } from 'common/types/types';
 
+import { ProjectType } from '../../common/types/projects/project.type';
 import { getAllProjects, getById } from './actions';
 
 type State={
-  project: ProjectsType | null,
-  projects: ProjectsType[],
+  project: ProjectType | null,
+  projects: ProjectsPageType | null,
 };
 
 const initialState: State = {
