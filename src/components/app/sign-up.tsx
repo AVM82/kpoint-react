@@ -10,19 +10,48 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch.hook';
+import { authAction } from '../../store/actions';
+import { SignUpType } from '../../common/types/sign-up/sign-up';
 
 const defaultTheme = createTheme();
 
 const SignUp: FC = () => {
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const dispatch = useAppDispatch();
+
+  const [formData, setFormData] = useState<SignUpType>({
+    firstName: '',
+    lastName: '',
+    username: '',
+    email: '',
+    password: '',
+    avatarImgUrl: '',
+    description: '',
+    tags: [''],
+  });
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+    console.log(formData);
+    dispatch(authAction.register(formData)).then((user) => {
+      console.log(user.payload);
     });
+  };
+
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    setFormData((formData) => ({
+      ...formData,
+      [name]: value,
+    }));
+  };
+
+  const handleTagsChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const tagsInput = event.target.value;
+    const tagsArray = tagsInput.split(',').map(tag => tag.trim());
+    setFormData({ ...formData, tags: tagsArray });
   };
 
   return (
@@ -58,6 +87,7 @@ const SignUp: FC = () => {
                   fullWidth
                   id="firstName"
                   label="First Name"
+                  onChange={handleOnChange}
                   autoFocus
                 />
               </Grid>
@@ -69,8 +99,22 @@ const SignUp: FC = () => {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  onChange={handleOnChange}
                 />
               </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                  onChange={handleOnChange}
+                />
+              </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   required
@@ -79,6 +123,7 @@ const SignUp: FC = () => {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={handleOnChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -90,6 +135,38 @@ const SignUp: FC = () => {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={handleOnChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="avatarImgUrl"
+                  label="AvatarUrl"
+                  id="avatarImgUrl"
+                  onChange={handleOnChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="description"
+                  label="Description"
+                  id="description"
+                  onChange={handleOnChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="tags"
+                  label="Tags"
+                  id="tags"
+                  value={formData.tags.join(', ')}
+                  onChange={handleTagsChange}
                 />
               </Grid>
             </Grid>
