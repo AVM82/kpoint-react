@@ -1,4 +1,5 @@
 import { FC, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { projectAction } from 'store/actions';
 
 import { useAppDispatch } from '../../hooks/hooks';
@@ -7,12 +8,15 @@ import { ProjectPage } from './project-page';
 
 const ProjectDetailsPage: FC = () => {
   const dispatch = useAppDispatch();
+  const { projectId } = useParams();
 
   useEffect(() => {
-    dispatch(projectAction.getById({
-      id: 1,
-    }));
-  }, []);
+    if (projectId) {
+      dispatch(projectAction.getById({
+        id: projectId,
+      }));
+    }
+  }, [dispatch, projectId]);
 
   const { project } = useAppSelector(({ project }) => ({
     project: project.project,

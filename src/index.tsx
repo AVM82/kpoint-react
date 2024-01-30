@@ -24,7 +24,7 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<ProjectsPage/>}/>
-          <Route path="projects/1" element={<ProjectDetailsPage/>}/>
+          <Route path="projects/:projectId" element={<ProjectDetailsPage/>}/>
           <Route path="/projects/new" element={<ProjectCreate/>}/>
           <Route path="/sign-in" element={<SignInPage/>}/>
           <Route path="/sign-up" element={<SignUpPage/>}/>

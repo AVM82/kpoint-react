@@ -13,11 +13,11 @@ export const CustomTimeline: FC<{ allStatuses: string[];
     const { t } = useTranslation();
 
     return (
-      <Timeline position="alternate">
+      <Timeline position="right">
         {allStatuses.map((status, index) => (
           <TimelineItem key={index}>
             <TimelineSeparator>
-              <TimelineDot color={status === currentStatus ? 'info' : 'grey'} />
+              <TimelineDot color={status === currentStatus ? 'success' : 'grey'} />
               {index < allStatuses.length - 1 && <TimelineConnector />}
             </TimelineSeparator>
             <TimelineContent>

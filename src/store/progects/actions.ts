@@ -6,7 +6,7 @@ import { ProjectsEditType } from '../../common/types/projects/projects-edit.type
 import { ProjectsPageType } from '../../common/types/projects/projects-page.type';
 import { ActionType } from './common';
 
-const getById = createAsyncThunk<ProjectType, { id: number }, AsyncThunkConfig>(
+const getById = createAsyncThunk<ProjectType, { id: string }, AsyncThunkConfig>(
   ActionType.GET_BY_ID,
   async (payload, { extra }) => {
     const { projectApi } = extra;

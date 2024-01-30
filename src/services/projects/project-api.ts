@@ -20,7 +20,7 @@ class ProjectApi {
     this.#apiPrefix = apiPrefix;
   }
 
-  public getById(payload: { id: number }): Promise<ProjectType> {
+  public getById(payload: { id: string }): Promise<ProjectType> {
     return this.#http.load(
       `${this.#apiPrefix}/projects/${payload.id}`, {
         method: HttpMethod.GET,
