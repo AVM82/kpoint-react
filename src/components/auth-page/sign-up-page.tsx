@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { FC, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { SignUpType } from '../../common/types/sign-up/sign-up';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch.hook';
@@ -20,6 +21,7 @@ const defaultTheme = createTheme();
 
 const SignUpPage: FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<SignUpType>({
     firstName: '',
@@ -27,6 +29,7 @@ const SignUpPage: FC = () => {
     username: '',
     email: '',
     password: '',
+    repeatedPassword: '',
     avatarImgUrl: '',
     description: '',
     tags: [''],
@@ -37,6 +40,10 @@ const SignUpPage: FC = () => {
     console.log(formData);
     dispatch(authAction.register(formData)).then((user) => {
       console.log(user.payload);
+
+      if (user.payload != null) {
+        navigate('/sign-in');
+      }
     });
   };
 
@@ -58,7 +65,7 @@ const SignUpPage: FC = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
+        <CssBaseline/>
         <Box
           sx={{
             marginTop: 8,
@@ -68,7 +75,7 @@ const SignUpPage: FC = () => {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: '#757575' }}>
-            <LockOutlinedIcon />
+            <LockOutlinedIcon/>
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
@@ -143,6 +150,18 @@ const SignUpPage: FC = () => {
                 <TextField
                   required
                   fullWidth
+                  name="repeatedPassword"
+                  label="Repeated Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                  onChange={handleOnChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
                   name="avatarImgUrl"
                   label="AvatarUrl"
                   id="avatarImgUrl"
@@ -181,7 +200,7 @@ const SignUpPage: FC = () => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href={'/sign-in'} variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

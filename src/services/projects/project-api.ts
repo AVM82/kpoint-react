@@ -24,6 +24,7 @@ class ProjectApi {
     return this.#http.load(
       `${this.#apiPrefix}/projects/${payload.id}`, {
         method: HttpMethod.GET,
+        hasAuth: false,
       },
     );
   }
@@ -32,6 +33,7 @@ class ProjectApi {
     return this.#http.load(
       `${this.#apiPrefix}/projects?size=${payload.size}&number=${payload.number}`, {
         method: HttpMethod.GET,
+        hasAuth: false,
         queryString: {
           size: payload.size,
           page: payload.number,

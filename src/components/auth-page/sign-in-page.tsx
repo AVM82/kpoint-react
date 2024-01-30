@@ -13,15 +13,19 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { FC, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { authAction } from 'store/actions';
 
+import { StorageKey } from '../../common/enums/app/storage-key.enum';
 import { SignInType } from '../../common/types/sign-in/sign-in';
 import { useAppDispatch } from '../../hooks/hooks';
+import { storage } from '../../services/services';
 
 const defaultTheme = createTheme();
 
 const SignInPage: FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<SignInType>({
     email: '',
@@ -31,7 +35,11 @@ const SignInPage: FC = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     dispatch(authAction.login(formData)).then((token) => {
-      console.log(token.payload);
+      storage.setItem(StorageKey.TOKEN, token.payload.token);
+      
+      if (token.payload != null) {
+        navigate('/');
+      }
     });
   };
 
@@ -115,7 +123,7 @@ const SignInPage: FC = () => {
               </Button>
               <Grid item>
                 Ще немає облікового запису?
-                <Link href="sign-up" variant="body2" sx={{ ml: 3 }}>
+                <Link href={'sign-up'} variant="body2" sx={{ ml: 3 }}>
                   {'Зареєструватися'}
                 </Link>
               </Grid>
