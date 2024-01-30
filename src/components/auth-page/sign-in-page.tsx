@@ -34,11 +34,15 @@ const SignInPage: FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    dispatch(authAction.login(formData)).then((token) => {
-      storage.setItem(StorageKey.TOKEN, token.payload.token);
-      
-      if (token.payload != null) {
-        navigate('/');
+
+    dispatch(authAction.login(formData)).then((tokenAction) => {
+      if (authAction.login.fulfilled.match(tokenAction)) {
+        const token = tokenAction.payload;
+
+        if (token) {
+          storage.setItem(StorageKey.TOKEN, token);
+          navigate('/');
+        }
       }
     });
   };
