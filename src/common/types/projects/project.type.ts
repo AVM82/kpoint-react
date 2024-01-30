@@ -1,4 +1,3 @@
-import { CoordinatesType } from './coordinates.type';
 import { NetworksLinks } from './networks-links.type';
 import { OwnerType } from './owner.type';
 
@@ -10,7 +9,8 @@ export type ProjectType = {
   description: string,
   tags: string[],
   logoImgUrl: string,
-  coordinates: CoordinatesType,
+  latitude: number,
+  longitude: number,
   createdAt: string,
   state: string,
   ownerSum: number,
