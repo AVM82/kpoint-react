@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AsyncThunkConfig } from 'common/types/app/async-thunk-config.type';
 
 import { ProjectType } from '../../common/types/projects/project.type';
+import { ProjectsEditType } from '../../common/types/projects/projects-edit.type';
 import { ProjectsPageType } from '../../common/types/projects/projects-page.type';
 import { ActionType } from './common';
 
@@ -24,4 +25,13 @@ const getAllProjects = createAsyncThunk<ProjectsPageType,
     },
   );
 
-export { getAllProjects,getById };
+const createNew = createAsyncThunk<ProjectType, { newProject: ProjectsEditType }, AsyncThunkConfig>(
+  ActionType.POST_NEW,
+  async (payload, { extra }) => {
+    const { projectApi } = extra;
+
+    return projectApi.createNew(payload.newProject);
+  },
+);
+
+export { createNew,getAllProjects,getById };

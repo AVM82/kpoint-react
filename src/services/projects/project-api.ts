@@ -1,6 +1,7 @@
 import { HttpMethod } from 'common/enums/http/http-method.enum';
-import { ProjectsPageType, ProjectType } from 'common/types/types';
+import { ProjectsEditType, ProjectsPageType, ProjectType } from 'common/types/types';
 
+import { ContentType } from '../../common/enums/file/content-type.enum';
 import { Http } from '../http/http.service';
 
 type Constructor = {
@@ -37,6 +38,16 @@ class ProjectApi {
           size: payload.size,
           page: payload.number,
         },
+      },
+    );
+  }
+
+  public createNew(payload: ProjectsEditType): Promise<ProjectType> {
+    return this.#http.load(
+      `${this.#apiPrefix}/projects`, {
+        method: HttpMethod.POST,
+        payload: JSON.stringify(payload),
+        contentType: ContentType.JSON,
       },
     );
   }
