@@ -11,24 +11,24 @@ import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import * as React from 'react';
 import { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { authAction } from 'store/actions';
-import { ENV } from '../../common/enums/enums';
 
-
-import { StorageKey } from '../../common/enums/enums';
+import { ENV , StorageKey } from '../../common/enums/enums';
 import { ResponseType } from '../../common/types/response/response';
 import { SignInType } from '../../common/types/sign-in/sign-in';
 import { useAppDispatch } from '../../hooks/hooks';
 import { storage } from '../../services/services';
-import {GoogleOAuthProvider} from "@react-oauth/google";
-import {OAuth2} from "./oauth2";
+import { OAuth2 } from './oauth2';
 
 const defaultTheme = createTheme();
 
 const SignInPage: FC = () => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -77,9 +77,9 @@ const SignInPage: FC = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5" sx={{ fontWeight: 'bold' }}>
-            З поверненням!
+            {t('welcome')}
           </Typography>
-          <Typography>Увійдіть, щоб продовжити</Typography>
+          <Typography>{t('sign_in_to_continue')}</Typography>
           <Box
             component="form"
             noValidate
@@ -91,7 +91,7 @@ const SignInPage: FC = () => {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label={t('email')}
               name="email"
               value={formData.email}
               autoComplete="email"
@@ -103,7 +103,7 @@ const SignInPage: FC = () => {
               required
               fullWidth
               name="password"
-              label="Password"
+              label={t('password')}
               type="password"
               id="password"
               value={formData.password}
@@ -114,12 +114,12 @@ const SignInPage: FC = () => {
               <Grid item>
                 <FormControlLabel
                   control={<Checkbox value="remember" color="primary" />}
-                  label="Запамʼятай мене"
+                  label={t('remember_me')}
                 />
               </Grid>
               <Grid item xs>
                 <Link href="#" variant="body2" sx={{ ml: 12 }}>
-                  Забули пароль?
+                  {t('forgot_password')}
                 </Link>
               </Grid>
               <Button
@@ -128,16 +128,16 @@ const SignInPage: FC = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2, bgcolor: '#757575' }}
               >
-                УВІЙТИ
+                {t('sign_in')}
               </Button>
-              <Grid item >
-                Ще немає облікового запису?
+              <Grid item>
+                {t('dont_have_an_account')}
                 <Link href={'sign-up'} variant="body2" sx={{ ml: 3 }}>
-                  {'Зареєструватися'}
+                  {t('sign_up')}
                 </Link>
               </Grid>
               <Grid>
-                <GoogleOAuthProvider clientId="95773710437-per0n2kjs8v1438vahr6bp0htrka5bvm.apps.googleusercontent.com">
+                <GoogleOAuthProvider clientId={ENV.OAUTH2_GOOGLE}>
                   <OAuth2></OAuth2>
                 </GoogleOAuthProvider>,
               </Grid>
