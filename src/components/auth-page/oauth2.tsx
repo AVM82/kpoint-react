@@ -1,24 +1,20 @@
-import Button from '@mui/material/Button';
 import { useGoogleLogin } from '@react-oauth/google';
 import { FC } from 'react';
+import GoogleButton from 'react-google-button';
 
 const OAuth2: FC = () => {
-  const login = useGoogleLogin({
-    redirect_uri: 'http://localhost:8080/api/auth/oauth2',
-    onSuccess: async (response) => {
-      // Log the Google login success response
-      console.log('Google Login Success:', response);
 
-      // Make a POST request to your backend with the response data
+  const login = useGoogleLogin({
+    redirect_uri: 'http://localhost:5001/api/auth/oauth2',
+    onSuccess: async (response) => {
       try {
-        const backendResponse = await fetch('http://localhost:8080/api/auth/oauth2', {
+        const backendResponse = await fetch('http://localhost:5001/api/auth/oauth2', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            // Add any additional headers if needed
           },
           body: JSON.stringify({
-            code: response.code, // Adjust the key and payload structure as needed
+            code: response.code,
           }),
         });
 
@@ -37,10 +33,9 @@ const OAuth2: FC = () => {
 
   return (
     <div>
-      <h2>React Google Login</h2>
-      <Button onClick={login}>
+      <GoogleButton onClick={login} type={'dark'}>
         Login with Google
-      </Button>
+      </GoogleButton>
     </div>
   );
 };

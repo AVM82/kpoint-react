@@ -18,7 +18,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { authAction } from 'store/actions';
 
-import { ENV , StorageKey } from '../../common/enums/enums';
+import { StorageKey } from '../../common/enums/enums';
 import { ResponseType } from '../../common/types/response/response';
 import { SignInType } from '../../common/types/sign-in/sign-in';
 import { useAppDispatch } from '../../hooks/hooks';
@@ -130,16 +130,20 @@ const SignInPage: FC = () => {
               >
                 {t('sign_in')}
               </Button>
+              <Grid   container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justifyContent="center">
+                <GoogleOAuthProvider clientId="95773710437-per0n2kjs8v1438vahr6bp0htrka5bvm.apps.googleusercontent.com">
+                  <OAuth2></OAuth2>
+                </GoogleOAuthProvider>,
+              </Grid>
               <Grid item>
                 {t('dont_have_an_account')}
                 <Link href={'sign-up'} variant="body2" sx={{ ml: 3 }}>
                   {t('sign_up')}
                 </Link>
-              </Grid>
-              <Grid>
-                <GoogleOAuthProvider clientId={ENV.OAUTH2_GOOGLE}>
-                  <OAuth2></OAuth2>
-                </GoogleOAuthProvider>,
               </Grid>
             </Grid>
           </Box>
