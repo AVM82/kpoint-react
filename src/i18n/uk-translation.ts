@@ -1,4 +1,5 @@
 const ukTranslation = {
+  country: 'Україна',
   projects: 'Проекти',
   about_us: 'Про нас',
   log_in: 'Увійти',
@@ -18,11 +19,15 @@ const ukTranslation = {
   buttons: {
     subscribe: 'Підписатися',
     donate: 'Зробити внесок',
-    support: 'Підтримати',
+    support: 'Приєднатися до проекту',
     location: 'Місцезнаходження',
   },
   owner: 'Власник',
   description: 'Опис',
+  about: 'Про проєкт',
+  team: 'Команда',
+  help_project: 'Допомогти проєкту',
+  comments: 'Коментарі',
 };
 
 export { ukTranslation };
