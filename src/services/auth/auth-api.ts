@@ -1,6 +1,7 @@
 import { HttpMethod } from 'common/enums/http/http-method.enum';
 
 import { ContentType } from '../../common/enums/file/content-type.enum';
+import { ResponseType } from '../../common/types/response/response';
 import { SignInType } from '../../common/types/sign-in/sign-in';
 import { SignUpType } from '../../common/types/sign-up/sign-up';
 import { Http } from '../http/http.service';
@@ -31,7 +32,7 @@ class AuthApi {
     });
   }
 
-  public login(payload: SignInType): Promise<string> {
+  public login(payload: SignInType): Promise<ResponseType> {
     return this.#http.load(`${this.#apiPrefix}/auth/login`, {
       method: HttpMethod.POST,
       hasAuth: false,
