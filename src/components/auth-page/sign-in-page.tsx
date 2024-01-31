@@ -15,11 +15,15 @@ import * as React from 'react';
 import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authAction } from 'store/actions';
+import { ENV } from '../../common/enums/enums';
+
 
 import { StorageKey } from '../../common/enums/app/storage-key.enum';
 import { SignInType } from '../../common/types/sign-in/sign-in';
 import { useAppDispatch } from '../../hooks/hooks';
 import { storage } from '../../services/services';
+import {GoogleOAuthProvider} from "@react-oauth/google";
+import {OAuth2} from "./oauth2";
 
 const defaultTheme = createTheme();
 
@@ -125,11 +129,16 @@ const SignInPage: FC = () => {
               >
                 УВІЙТИ
               </Button>
-              <Grid item>
+              <Grid item >
                 Ще немає облікового запису?
                 <Link href={'sign-up'} variant="body2" sx={{ ml: 3 }}>
                   {'Зареєструватися'}
                 </Link>
+              </Grid>
+              <Grid>
+                <GoogleOAuthProvider clientId="95773710437-per0n2kjs8v1438vahr6bp0htrka5bvm.apps.googleusercontent.com">
+                  <OAuth2></OAuth2>
+                </GoogleOAuthProvider>,
               </Grid>
             </Grid>
           </Box>
