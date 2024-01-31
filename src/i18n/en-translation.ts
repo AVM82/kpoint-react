@@ -1,4 +1,5 @@
 const enTranslation = {
+  country: 'Ukraine',
   projects: 'Projects',
   about_us: 'About us',
   log_in: 'Log in',
@@ -18,11 +19,15 @@ const enTranslation = {
   buttons: {
     subscribe: 'Subscribe',
     donate: 'Donate',
-    support: 'Support',
+    support: 'Join the project',
     location: 'Location',
   },
   owner: 'Owner',
   description: 'Description',
+  about:'About project',
+  team: 'Team',
+  help_project: 'Help Project',
+  comments: 'Comments',
 };
 
 export { enTranslation };

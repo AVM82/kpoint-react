@@ -1,3 +1,6 @@
+import AddIcon from '@mui/icons-material/Add';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { Box, Chip, Paper, Tab, Tabs } from '@mui/material';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -42,6 +45,7 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
             flexGrow: 1,
           }}
         >
+          {/*button subscribe, social media links*/}
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Button
               size="large"
@@ -56,6 +60,7 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
                 color: '#828282',
               }}
             >
+              <AddIcon />
               {t('buttons.subscribe')}
             </Button>
             <Typography variant="subtitle1" component="div">
@@ -66,7 +71,7 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
               ))}
             </Typography>
           </Box>
-          {/* spase here  */}
+          {/* paper fpr spase  */}
           <Paper
             sx={{
               p: 2,
@@ -74,14 +79,14 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
               bgcolor: '#A8A8A9',
               maxWidth: 900,
               maxHeight: 20,
-              flexGrow: 1,
+              opacity: 0, // makes in invisible but present
             }}
           >
           </Paper>
 
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Grid container spacing={3}>
-              {/* Left Part: Logo and Project Details */}
+              {/* Left Part: Logo, Chips */}
               <Grid item>
                 <Card>
                   <CardMedia
@@ -110,7 +115,7 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
                   ))}
                 </Grid>
               </Grid>
-
+              {/* Project Details*/}
               <Grid item xs={12} sm container>
                 <Grid item xs container direction="column" spacing={2}>
                   <Grid item xs>
@@ -142,20 +147,16 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
                         display: 'inline-block',
                       }}
                     >
-                      Location
+                      {t('country')}
                     </Link>
-                    <Typography variant="body2">
-                      Followers: 2000
-                    </Typography>
-
                   </Grid>
                 </Grid>
               </Grid>
 
-              {/* Right Part: Buttons */}
+              {/* Right Part: Buttons donate, support*/}
               <Grid item>
                 <Box sx={{ marginTop: 20 }}>
-                  <Grid item>
+                  <Grid container direction="column" justifyContent="flex-end" alignItems="flex-end">
                     <Box>
                       <Button
                         size="large"
@@ -169,8 +170,11 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
                           backgroundImage: 'linear-gradient(0deg, #FFFFFF, #FFFFFF)',
                           color: '#828282',
                           marginBottom: '10px',
+                          width: '250px',
                         }}
-                      >{t('buttons.donate')}</Button>
+                      >
+                        <PersonAddIcon/>
+                        {t('buttons.support')}</Button>
                     </Box>
                     <Box>
                       <Button
@@ -184,14 +188,16 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
                           textAlign: 'left',
                           backgroundImage: 'linear-gradient(0deg, #FFFFFF, #FFFFFF)',
                           color: '#828282',
+                          width: '250px',
                         }}
-                      >{t('buttons.support')}</Button>
+                      >
+                        <AttachMoneyIcon/>
+                        {t('buttons.donate')}</Button>
                     </Box>
                   </Grid>
                 </Box>
               </Grid>
             </Grid>
-
           </Box>
         </Paper>
       </Paper>
@@ -206,14 +212,14 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
         }}
       >
         <Box sx={{ width: '100%' }}>
-          <Tabs
+          <Tabs value={0}
             aria-label="nav tabs example"
             role="navigation"
           >
-            <Tab label="About" />
-            <Tab label="Team" />
-            <Tab label="Help Project" />
-            <Tab label="Comments" />
+            <Tab label={t('about')} />
+            <Tab label={t('team')} />
+            <Tab label={t('help_project')} />
+            <Tab label={t('comments')} />
           </Tabs>
         </Box>
       </Paper>
@@ -228,21 +234,16 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
         }}
       >
         <Grid container spacing={2}>
-          {/* Left Column */}
+          {/* Left Column Description */}
           <Grid item xs={6}>
             <Typography gutterBottom variant="subtitle1" component="div">
               <Box fontWeight="fontWeightBold">Description:</Box>
               {'\n'}
               {project.description}
             </Typography>
-            <Typography gutterBottom variant="subtitle1" component="div">
-              <Box fontWeight="fontWeightBold">Summary:</Box>
-              {'\n'}
-              {project.summary}
-            </Typography>
           </Grid>
 
-          {/* Right Column */}
+          {/* Right Column project state*/}
           <Grid item xs={6}>
             <CustomTimeline allStatuses={allStatuses} currentStatus={project.state} />
           </Grid>
