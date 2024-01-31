@@ -3,7 +3,7 @@ const ukTranslation = {
   projects: 'Проекти',
   about_us: 'Про нас',
   sign_in: 'Увійти',
-  sign_up: 'Приєднатись',
+  sign_up: 'Зареєструватись',
   first_name: 'Імʼя',
   last_name: 'Прізвище',
   username: 'Імʼя користувача',
