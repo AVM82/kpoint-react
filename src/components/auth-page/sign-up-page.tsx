@@ -38,13 +38,15 @@ const SignUpPage: FC = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     console.log(formData);
-    dispatch(authAction.register(formData)).then((user) => {
-      console.log(user.payload);
+    dispatch(authAction.register(formData))
+      .unwrap()
+      .then((user) => {
+        console.log(user);
 
-      if (user.payload != null) {
-        navigate('/sign-in');
-      }
-    });
+        if (user != null) {
+          navigate('/sign-in');
+        }
+      });
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -56,7 +58,9 @@ const SignUpPage: FC = () => {
     }));
   };
 
-  const handleTagsChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleTagsChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
     const tagsInput = event.target.value;
     const tagsArray = tagsInput.split(',').map((tag) => tag.trim());
     setFormData({ ...formData, tags: tagsArray });
@@ -65,7 +69,7 @@ const SignUpPage: FC = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
-        <CssBaseline/>
+        <CssBaseline />
         <Box
           sx={{
             marginTop: 8,
@@ -75,7 +79,7 @@ const SignUpPage: FC = () => {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: '#757575' }}>
-            <LockOutlinedIcon/>
+            <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up

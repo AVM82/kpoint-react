@@ -16,7 +16,8 @@ import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authAction } from 'store/actions';
 
-import { StorageKey } from '../../common/enums/app/storage-key.enum';
+import { StorageKey } from '../../common/enums/enums';
+import { ResponseType } from '../../common/types/response/response';
 import { SignInType } from '../../common/types/sign-in/sign-in';
 import { useAppDispatch } from '../../hooks/hooks';
 import { storage } from '../../services/services';
@@ -35,14 +36,14 @@ const SignInPage: FC = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    dispatch(authAction.login(formData)).then((tokenAction) => {
-      if (authAction.login.fulfilled.match(tokenAction)) {
-        const token = tokenAction.payload;
-
-        if (token) {
-          storage.setItem(StorageKey.TOKEN, token);
-          navigate('/');
-        }
+    dispatch(authAction.login(formData)).then((action) => {
+      if (authAction.login.fulfilled.match(action)) {
+        const responseType: ResponseType = action.payload;
+        const user = JSON.stringify(responseType.user);
+        storage.setItem(StorageKey.TOKEN, responseType.token);
+        storage.setItem(StorageKey.USER, user);
+        console.log(responseType.user);
+        navigate('/');
       }
     });
   };
