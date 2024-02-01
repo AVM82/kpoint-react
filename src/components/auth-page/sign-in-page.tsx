@@ -11,20 +11,24 @@ import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import * as React from 'react';
 import { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { authAction } from 'store/actions';
 
-import { StorageKey } from '../../common/enums/enums';
+import { ENV, StorageKey } from '../../common/enums/enums';
 import { ResponseType } from '../../common/types/response/response';
 import { SignInType } from '../../common/types/sign-in/sign-in';
 import { useAppDispatch } from '../../hooks/hooks';
 import { storage } from '../../services/services';
+import { OAuth2 } from './oauth2';
 
 const defaultTheme = createTheme();
 
 const SignInPage: FC = () => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -37,14 +41,12 @@ const SignInPage: FC = () => {
     event.preventDefault();
 
     dispatch(authAction.login(formData)).then((action) => {
-      if (authAction.login.fulfilled.match(action)) {
-        const responseType: ResponseType = action.payload;
-        const user = JSON.stringify(responseType.user);
-        storage.setItem(StorageKey.TOKEN, responseType.token);
-        storage.setItem(StorageKey.USER, user);
-        console.log(responseType.user);
-        navigate('/');
-      }
+      const responseType: ResponseType = action.payload as ResponseType;
+      const user = responseType.user;
+      storage.setItem(StorageKey.TOKEN, responseType.token);
+      storage.setItem(StorageKey.USER, JSON.stringify(user));
+      console.log(responseType.user);
+      navigate('/');
     });
   };
 
@@ -60,7 +62,7 @@ const SignInPage: FC = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
+        <CssBaseline/>
         <Box
           sx={{
             marginTop: 8,
@@ -70,12 +72,12 @@ const SignInPage: FC = () => {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: '#757575' }}>
-            <LockOutlinedIcon />
+            <LockOutlinedIcon/>
           </Avatar>
           <Typography component="h1" variant="h5" sx={{ fontWeight: 'bold' }}>
-            З поверненням!
+            {t('welcome')}
           </Typography>
-          <Typography>Увійдіть, щоб продовжити</Typography>
+          <Typography>{t('sign_in_to_continue')}</Typography>
           <Box
             component="form"
             noValidate
@@ -87,7 +89,7 @@ const SignInPage: FC = () => {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label={t('email')}
               name="email"
               value={formData.email}
               autoComplete="email"
@@ -99,7 +101,7 @@ const SignInPage: FC = () => {
               required
               fullWidth
               name="password"
-              label="Password"
+              label={t('password')}
               type="password"
               id="password"
               value={formData.password}
@@ -109,13 +111,13 @@ const SignInPage: FC = () => {
             <Grid container alignItems="center" justifyContent="space-between">
               <Grid item>
                 <FormControlLabel
-                  control={<Checkbox value="remember" color="primary" />}
-                  label="Запамʼятай мене"
+                  control={<Checkbox value="remember" color="primary"/>}
+                  label={t('remember_me')}
                 />
               </Grid>
               <Grid item xs>
                 <Link href="#" variant="body2" sx={{ ml: 12 }}>
-                  Забули пароль?
+                  {t('forgot_password')}
                 </Link>
               </Grid>
               <Button
@@ -124,12 +126,21 @@ const SignInPage: FC = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2, bgcolor: '#757575' }}
               >
-                УВІЙТИ
+                {t('sign_in')}
               </Button>
+              <Grid container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justifyContent="center">
+                <GoogleOAuthProvider clientId={ENV.OAUTH2_GOOGLE_CLIENT_ID}>
+                  <OAuth2></OAuth2>
+                </GoogleOAuthProvider>,
+              </Grid>
               <Grid item>
-                Ще немає облікового запису?
+                {t('dont_have_an_account')}
                 <Link href={'sign-up'} variant="body2" sx={{ ml: 3 }}>
-                  {'Зареєструватися'}
+                  {t('sign_up')}
                 </Link>
               </Grid>
             </Grid>
