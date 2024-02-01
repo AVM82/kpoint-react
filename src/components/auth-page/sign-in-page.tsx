@@ -18,7 +18,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { authAction } from 'store/actions';
 
-import { StorageKey } from '../../common/enums/enums';
+import { ENV, StorageKey } from '../../common/enums/enums';
 import { ResponseType } from '../../common/types/response/response';
 import { SignInType } from '../../common/types/sign-in/sign-in';
 import { useAppDispatch } from '../../hooks/hooks';
@@ -41,14 +41,12 @@ const SignInPage: FC = () => {
     event.preventDefault();
 
     dispatch(authAction.login(formData)).then((action) => {
-      if (authAction.login.fulfilled.match(action)) {
-        const responseType: ResponseType = action.payload;
-        const user = JSON.stringify(responseType.user);
-        storage.setItem(StorageKey.TOKEN, responseType.token);
-        storage.setItem(StorageKey.USER, user);
-        console.log(responseType.user);
-        navigate('/');
-      }
+      const responseType: ResponseType = action.payload as ResponseType;
+      const user = responseType.user;
+      storage.setItem(StorageKey.TOKEN, responseType.token);
+      storage.setItem(StorageKey.USER, JSON.stringify(user));
+      console.log(responseType.user);
+      navigate('/');
     });
   };
 
@@ -64,7 +62,7 @@ const SignInPage: FC = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
+        <CssBaseline/>
         <Box
           sx={{
             marginTop: 8,
@@ -74,7 +72,7 @@ const SignInPage: FC = () => {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: '#757575' }}>
-            <LockOutlinedIcon />
+            <LockOutlinedIcon/>
           </Avatar>
           <Typography component="h1" variant="h5" sx={{ fontWeight: 'bold' }}>
             {t('welcome')}
@@ -113,7 +111,7 @@ const SignInPage: FC = () => {
             <Grid container alignItems="center" justifyContent="space-between">
               <Grid item>
                 <FormControlLabel
-                  control={<Checkbox value="remember" color="primary" />}
+                  control={<Checkbox value="remember" color="primary"/>}
                   label={t('remember_me')}
                 />
               </Grid>
@@ -130,12 +128,12 @@ const SignInPage: FC = () => {
               >
                 {t('sign_in')}
               </Button>
-              <Grid   container
+              <Grid container
                 spacing={0}
                 direction="column"
                 alignItems="center"
                 justifyContent="center">
-                <GoogleOAuthProvider clientId="95773710437-per0n2kjs8v1438vahr6bp0htrka5bvm.apps.googleusercontent.com">
+                <GoogleOAuthProvider clientId={ENV.OAUTH2_GOOGLE_CLIENT_ID}>
                   <OAuth2></OAuth2>
                 </GoogleOAuthProvider>,
               </Grid>

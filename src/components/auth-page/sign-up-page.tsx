@@ -34,7 +34,7 @@ const SignUpPage: FC = () => {
     repeatedPassword: '',
     avatarImgUrl: '',
     description: '',
-    tags: [''],
+    tags: [],
   });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
