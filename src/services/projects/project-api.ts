@@ -1,5 +1,5 @@
 import { HttpMethod } from 'common/enums/http/http-method.enum';
-import { ProjectsEditType, ProjectsPageType, ProjectType } from 'common/types/types';
+import {GetAllProjectsType, ProjectsEditType, ProjectsPageType, ProjectType} from 'common/types/types';
 
 import { ContentType } from '../../common/enums/file/content-type.enum';
 import { Http } from '../http/http.service';
@@ -30,6 +30,19 @@ class ProjectApi {
   }
 
   public getAllProjects(payload:{ size: number, number: number }): Promise<ProjectsPageType> {
+    return this.#http.load(
+      `${this.#apiPrefix}/projects?size=${payload.size}&number=${payload.number}`, {
+        method: HttpMethod.GET,
+        hasAuth: false,
+        queryString: {
+          size: payload.size,
+          page: payload.number,
+        },
+      },
+    );
+  }
+
+  public addMore(payload:{ size: number, number: number }): Promise<GetAllProjectsType[]> {
     return this.#http.load(
       `${this.#apiPrefix}/projects?size=${payload.size}&number=${payload.number}`, {
         method: HttpMethod.GET,

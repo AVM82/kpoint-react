@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { ProjectsEditType, ProjectsPageType } from 'common/types/types';
 
 import { ProjectType } from '../../common/types/projects/project.type';
-import { createNew, getAllProjects, getById } from './actions';
+import { addMore, createNew, getAllProjects, getById } from './actions';
 
 type State={
   project: ProjectType | null,
@@ -33,7 +33,11 @@ const projectSlice = createSlice({
       })
       .addCase(getAllProjects.fulfilled, (state, { payload }) => {
         state.projects = payload;
-      }).addCase(createNew.rejected, (state) => {
+      })
+      .addCase(addMore.fulfilled, (state, { payload }) => {
+        state.projects?.content.concat(payload.content);
+      })
+      .addCase(createNew.rejected, (state) => {
         state.project = null;
       })
       .addCase(createNew.fulfilled, (state, { payload }) => {

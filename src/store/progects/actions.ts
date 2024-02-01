@@ -25,7 +25,17 @@ const getAllProjects = createAsyncThunk<ProjectsPageType,
     },
   );
 
-const createNew = createAsyncThunk<ProjectType, { projectData: ProjectsEditType }, AsyncThunkConfig>(
+const addMore = createAsyncThunk<ProjectsPageType,
+  { size: number, number: number }, AsyncThunkConfig>(
+    ActionType.GET_ALL_PROJECTS,
+    async (payload, { extra }) => {
+      const { projectApi } = extra;
+
+      return projectApi.addMore(payload);
+    },
+  );
+
+const createNew = createAsyncThunk<ProjectType, { newProject: ProjectsEditType }, AsyncThunkConfig>(
   ActionType.POST_NEW,
   async (payload, { extra }) => {
     const { projectApi } = extra;
@@ -34,4 +44,4 @@ const createNew = createAsyncThunk<ProjectType, { projectData: ProjectsEditType 
   },
 );
 
-export { createNew,getAllProjects,getById };
+export { addMore,createNew,getAllProjects,getById };
