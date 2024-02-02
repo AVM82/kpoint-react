@@ -9,49 +9,107 @@ import { ProjectCreateStep1Form } from './components/project-create-step-1';
 import { ProjectCreateStep2Form } from './components/project-create-step-2';
 import { ProjectCreateStep3Form } from './components/project-create-step-3';
 
-const steps: string[] = ['Загальна інформація', 'Про проєкт', 'План реалізації'];
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const getStepContent = (
-  step: number,
-  newProject: ProjectsEditType,
-  setProject: (project: ProjectsEditType) => void,
-) => {
-  switch(step) {
-  case 1: return <ProjectCreateStep1Form project={ newProject } setProject={ setProject }/>;
-  case 2: return <ProjectCreateStep2Form project={ newProject } setProject={ setProject }/>;
-  case 3: return <ProjectCreateStep3Form project={ newProject } setProject={ setProject }/>;
-  default: throw new Error('Unknown step');
-  }
-};
-
 export const ProjectCreate: FC = () => {
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const dispatch = useAppDispatch();
+  const steps: string[] = [
+    'Загальна інформація',
+    'Про проєкт',
+    'План реалізації'];
 
   const [
-    newProject,
-    setNewProject,
-  ] = useState<ProjectsEditType>(projectDefault);
+    errors,
+    setErrors,
+  ] = useState<Record<string, string>>({});
 
   const [
     activeStep,
     setActiveStep,
   ] = useState(1);
 
-  const handleNext = (): void => {
-    setActiveStep(activeStep + 1);
+  const [
+    projectData,
+    setProjectData,
+  ] = useState<ProjectsEditType>(projectDefault);
 
-    setNewProject(newProject);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const dispatch = useAppDispatch();
+
+  const handleNext = (): void => {
+    const validationErrors = validateForm(projectData);
+
+    if (Object.keys(validationErrors).length === 0) {
+      setErrors({});
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    } else {
+      setErrors(validationErrors);
+    }
 
     if (activeStep === steps.length) {
-      dispatch(projectAction.createNew({ newProject }));
+      dispatch(projectAction.createNew({ projectData }));
     }
   };
 
   const handleBack = () : void => {
-    setActiveStep(activeStep - 1);
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleChange = (field: string, value: string): void => {
+    setProjectData((prevData) => ({ ...prevData, [field]: value }));
+  };
+
+  const handleFieldFocus = (field: string): void => {
+    setErrors((prevErrors) => ({ ...prevErrors, [field]: '' }));
+  };
+
+  const validateForm = (data: ProjectsEditType): Record<string, string> => {
+    const errors: Record<string, string> = {};
+
+    switch(activeStep) {
+    case 1: {
+      if (!data.title.trim() || data.title.trim().length > 30) {
+        errors.title = 'Назва проєкту не може бути пуста або мати більше 30 символів';
+      } else if (data.tags.length < 1 || data.tags.length > 5) {
+        errors.tags = 'Кількість тегів може бути від 1 до 5';
+      } else if (!data.summary.trim() || data.summary.trim().length > 150) {
+        errors.summary = 'Короткий опис і мета не може бути пуста або мати більше 150 символів';
+      }
+      break;
+    }
+    case 2: {
+      if (!data.description.trim() || data.description.trim().length > 512) {
+        errors.description = 'Опис проєкта не може бути пуста або мати більше 512 символів';
+      }
+      break;
+    }
+    case 3: {
+      break;
+    }
+    }
+
+    return errors;
+  };
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  const getStepContent = (
+    step: number,
+  ) => {
+    switch(step) {
+    case 1: return <ProjectCreateStep1Form
+      projectData={ projectData }
+      handleChange={ handleChange }
+      handleFieldFocus={ handleFieldFocus }
+      errors={ errors }/>;
+    case 2: return <ProjectCreateStep2Form
+      projectData={ projectData }
+      handleChange={ handleChange }
+      handleFieldFocus={ handleFieldFocus }
+      errors={ errors }/>;
+    case 3: return <ProjectCreateStep3Form
+      projectData={ projectData }
+      handleChange={ handleChange }
+      handleFieldFocus={ handleFieldFocus }
+      errors={ errors }/>;
+    default: throw new Error('Unknown step');
+    }
   };
 
   return (
@@ -81,7 +139,7 @@ export const ProjectCreate: FC = () => {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {getStepContent(activeStep, newProject, setNewProject)}
+              {getStepContent(activeStep)}
               <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                 {activeStep !== 1 && (
                   <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>

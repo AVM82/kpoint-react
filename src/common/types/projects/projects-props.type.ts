@@ -1,6 +1,8 @@
 import { ProjectsEditType } from './projects-edit.type';
 
 export type EditProjectsPropsType = {
-  project: ProjectsEditType
-  setProject: (project: ProjectsEditType) => void
+  projectData: ProjectsEditType,
+  handleChange: (field: string, value: string) => void,
+  handleFieldFocus: (field: string) => void,
+  errors: Record<string, string>,
 };
