@@ -44,4 +44,4 @@ const createNew = createAsyncThunk<ProjectType, { newProject: ProjectsEditType }
   },
 );
 
-export { getAllProjectsAddMore,createNew,getAllProjectsDefault,getById };
+export { createNew,getAllProjectsAddMore,getAllProjectsDefault,getById };

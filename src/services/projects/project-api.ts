@@ -3,7 +3,6 @@ import { ProjectsEditType, ProjectsPageType, ProjectType } from 'common/types/ty
 
 import { ContentType } from '../../common/enums/file/content-type.enum';
 import { Http } from '../http/http.service';
-import {getAllProjectsAddMore} from "../../store/progects/actions";
 
 type Constructor = {
   http: Http;

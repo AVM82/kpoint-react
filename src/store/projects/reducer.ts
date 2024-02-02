@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { ProjectsEditType, ProjectsPageType } from 'common/types/types';
 
 import { ProjectType } from '../../common/types/projects/project.type';
-import { getAllProjectsAddMore, createNew, getAllProjectsDefault, getById } from './actions';
+import { createNew, getAllProjectsAddMore, getAllProjectsDefault, getById } from './actions';
 
 type State={
   project: ProjectType | null,
