@@ -19,21 +19,23 @@ const ProjectsPage: FC = () => {
 
   const maxPageElements = 2;
 
-  const { projects } = useAppSelector(({ project }) => ({
+  const { projects } = useAppSelector(({ project } ) => ({
     projects: project.projects,
   }));
 
   const [page, setPage] = useState(1);
 
   useLayoutEffect(() => {
-    dispatch(projectAction.getAllProjects({ size: maxPageElements, number: (page - 1) }));
-  }, [dispatch, page]);
+    dispatch(projectAction.getAllProjectsDefault({ size: maxPageElements, number: (page - 1) }));
+  }, [dispatch]);
 
   const handleChange = (event: ChangeEvent<unknown>, value: number): void => {
+    dispatch(projectAction.getAllProjectsDefault({ size: maxPageElements, number: (value - 1) }));
     setPage(value);
   };
 
   const handleAddMoreClick = (): void => {
+    dispatch(projectAction.getAllProjectsAddMore({ size: maxPageElements, number: (page) }));
     setPage(page + 1);
   };
 
