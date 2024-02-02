@@ -35,7 +35,7 @@ const getAllProjectsAddMore = createAsyncThunk<ProjectsPageType,
     },
   );
 
-const createNew = createAsyncThunk<ProjectType, { newProject: ProjectsEditType }, AsyncThunkConfig>(
+const createNew = createAsyncThunk<ProjectType, { projectData: ProjectsEditType }, AsyncThunkConfig>(
   ActionType.POST_NEW,
   async (payload, { extra }) => {
     const { projectApi } = extra;
