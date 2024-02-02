@@ -5,5 +5,6 @@ export type UserType = {
   email: string,
   avatarImgUrl: string,
   description: string,
+  roles: string[],
   tags: string[],
 };
