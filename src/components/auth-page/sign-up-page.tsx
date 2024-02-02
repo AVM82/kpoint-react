@@ -11,9 +11,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { SignUpType } from '../../common/types/sign-up/sign-up';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch.hook';
@@ -42,6 +42,20 @@ const SignUpPage: FC = () => {
     description: '',
     tags: [],
   });
+
+  const location = useLocation();
+  const [userData, setUserData] = useState({
+    email: '',
+    avatarImgUrl: '',
+  });
+
+  useEffect(() => {
+    console.log('location.state', location.state);
+
+    if (location.state && location.state.userData) {
+      setUserData(location.state.userData);
+    }
+  }, [location.state]);
 
   const [
     tag,
@@ -158,6 +172,7 @@ const SignUpPage: FC = () => {
                   id="email"
                   label={t('email')}
                   name="email"
+                  value={userData.email}
                   autoComplete="email"
                   onChange={handleOnChange}
                 />
@@ -190,6 +205,7 @@ const SignUpPage: FC = () => {
                 <TextField
                   fullWidth
                   name="avatarImgUrl"
+                  value={userData.avatarImgUrl}
                   label={t('avatar_url')}
                   id="avatarImgUrl"
                   onChange={handleOnChange}

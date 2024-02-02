@@ -135,7 +135,7 @@ const SignInPage: FC = () => {
                 justifyContent="center">
                 <GoogleOAuthProvider clientId={ENV.OAUTH2_GOOGLE_CLIENT_ID}>
                   <OAuth2></OAuth2>
-                </GoogleOAuthProvider>,
+                </GoogleOAuthProvider>
               </Grid>
               <Grid item>
                 {t('dont_have_an_account')}
