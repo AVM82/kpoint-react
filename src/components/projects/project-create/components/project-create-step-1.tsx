@@ -1,4 +1,5 @@
-import { Autocomplete, Avatar, Chip, Grid, ListItem, TextField } from '@mui/material';
+import { Autocomplete, Avatar, Chip, Grid, TextField } from '@mui/material';
+import Stack from '@mui/material/Stack';
 import React, { FC, ReactElement, useState } from 'react';
 
 import { CitiesType,EditProjectsPropsType } from '../../../../common/types/projects/projects';
@@ -14,8 +15,9 @@ type ChipTag = {
   tag: string;
 };
 
-export const ProjectCreateStep1Form: FC<EditProjectsPropsType> = ({ project, setProject }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const ProjectCreateStep1Form: FC<EditProjectsPropsType> = (
+  { projectData, handleChange, handleFieldFocus, errors }) => {
+
   const [
     tag,
     setTag,
@@ -23,8 +25,8 @@ export const ProjectCreateStep1Form: FC<EditProjectsPropsType> = ({ project, set
 
   const getChipTags = (): ChipTag[] => {
     const result: ChipTag[] = [];
-    for (let i = 0; i < project.tags.length; i++) {
-      result.push({ key: i, tag: project.tags[i] });
+    for (let i = 0; i < projectData.tags.length; i++) {
+      result.push({ key: i, tag: projectData.tags[i] });
     }
 
     return result;
@@ -36,8 +38,8 @@ export const ProjectCreateStep1Form: FC<EditProjectsPropsType> = ({ project, set
   ] = useState<ChipTag[]>(getChipTags());
 
   const handleDeleteTag = (chipToDelete: ChipTag) => () => {
-    setChipTags((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
-    project.tags = project.tags.filter((tag) => tag !== chipToDelete.tag);
+    setChipTags((chips) => chips.filter((chip: ChipTag): boolean => chip.key !== chipToDelete.key));
+    projectData.tags = projectData.tags.filter((tag: string): boolean => tag !== chipToDelete.tag);
   };
 
   return (
@@ -56,43 +58,33 @@ export const ProjectCreateStep1Form: FC<EditProjectsPropsType> = ({ project, set
         <Grid item xs={9}>
           <Grid item xs={true}>
             <TextField
-              // placeholder={'1234'}
-              // error
-              type={'text'}
-              required
-              id="projectName"
-              name="projectName"
               label="Назва проєкту"
               fullWidth
+              value={projectData.title}
+              // defaultValue={project.title}
+              onChange={(e): void => handleChange('title', e.target.value)}
+              onFocus={(): void => handleFieldFocus('title')}
+              error={!!errors.title}
+              helperText={errors.title}
+              // placeholder={'1234'}
+              // type={'text'}
+              required
               margin={'normal'}
-              // autoComplete="given-name"
+              autoComplete="given-name"
               variant="outlined"
-              defaultValue={project.title}
-              onChange={ (event: React.ChangeEvent<HTMLInputElement>): void => {
-                event.preventDefault();
-                project.title = event.target.value;
-                setProject(project);
-              }}
             />
           </Grid>
           <Grid item xs={true}>
             <Autocomplete
               {...citiesProps}
-              id="citi"
+              // id="citi"
               // name="citi"
               // defaultValue={project.city}
-              // onChange={ (event, newValue: CitiesType | null): void => {
-              //   event.preventDefault();
-              //   project.city = newValue;
-              //   setProject(project);
-              // }}
               renderInput={(params): ReactElement => (
                 <TextField
+                  label="Місто"
                   {...params}
                   required
-                  // id="citi"
-                  // name="citi"
-                  label="Місто"
                   fullWidth
                 />
               )}
@@ -102,42 +94,47 @@ export const ProjectCreateStep1Form: FC<EditProjectsPropsType> = ({ project, set
       </Grid>
       <Grid item xs={12}>
         <TextField
-          // error
-          type={'text'}
-          required
-          id="projectCategory"
-          name="projectCategory"
           label="Категорія"
           fullWidth
+          // value={projectData}
+          // type={'text'}
+          // required
+          // id="projectCategory"
+          // name="projectCategory"
           // autoComplete="given-name"
           variant="outlined"
         />
       </Grid>
       <Grid item xs={12}>
         <TextField
-          // error
-          type={'text'}
-          required
-          id="projectTags"
-          name="projectTags"
-          value={tag}
           label="Теги"
           fullWidth
+          // type={'text'}
+          required
+          placeholder={'Enter tag and press [Enter]'}
+          // id="projectTags"
+          // name="projectTags"
+          value={tag}
           // autoComplete="given-name"
           variant="outlined"
-          onChange={ (event): void => {
+          onChange={(event): void => {
             event.preventDefault();
             setTag(event.target.value);
           }}
-          onKeyDown={ ( event ):void => {
+          onFocus={(): void => handleFieldFocus('tags')}
+          error={!!errors.tags}
+          helperText={errors.tags}
+          onKeyDown={(event): void => {
             if (event.key === 'Enter') {
-              if (tag.trim().length > 0 && project.tags.indexOf(tag.trim()) === -1) {
-                project.tags.push(tag);
+              if (projectData.tags.length === 5) {
+                return;
+              }
+
+              if (tag.trim().length > 0 && projectData.tags.indexOf(tag.trim()) === -1) {
+                projectData.tags.push(tag);
                 setChipTags(getChipTags);
                 setTag('');
               }
-              // eslint-disable-next-line no-console
-              console.log(project.tags);
               event.preventDefault();
             }
           }}
@@ -155,10 +152,11 @@ export const ProjectCreateStep1Form: FC<EditProjectsPropsType> = ({ project, set
         >
           {chipTags.map((data) => {
             return (
-              <ListItem alignItems={'center'} key={data.key}>
+              <Stack alignItems={'center'} key={data.key}>
                 <Chip
                   sx={{
                     height: 'auto',
+                    mt: 2, mr: 2,
                     '& .MuiChip-label': {
                       display: 'block',
                       whiteSpace: 'normal',
@@ -167,30 +165,27 @@ export const ProjectCreateStep1Form: FC<EditProjectsPropsType> = ({ project, set
                   label={data.tag}
                   onDelete={handleDeleteTag(data)}
                 />
-              </ListItem>
+              </Stack>
             );
           })}
         </Grid>
       </Grid>
       <Grid item xs={12}>
         <TextField
-          // error
-          type={'text'}
-          required
-          id="summary"
-          name="summary"
           label="Короткий опис і мета"
           fullWidth
+          value={projectData.summary}
+          onChange={(e): void => handleChange('summary', e.target.value)}
+          onFocus={(): void => handleFieldFocus('summary')}
+          error={!!errors.summary}
+          helperText={errors.summary}
+          // type={'text'}
+          required
           multiline
           rows={4}
           // autoComplete="given-name"
           variant="outlined"
-          defaultValue={project.title}
-          onChange={ (event: React.ChangeEvent<HTMLInputElement>): void => {
-            event.preventDefault();
-            project.summary = event.target.value;
-            setProject(project);
-          }}
+          // defaultValue={project.title}
         />
       </Grid>
     </Grid>
