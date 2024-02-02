@@ -1,6 +1,7 @@
 import { Autocomplete, Avatar, Chip, Grid, TextField } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import React, { FC, ReactElement, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { CitiesType,EditProjectsPropsType } from '../../../../common/types/projects/projects';
 import { cities } from './Cities';
@@ -17,6 +18,8 @@ type ChipTag = {
 
 export const ProjectCreateStep1Form: FC<EditProjectsPropsType> = (
   { projectData, handleChange, handleFieldFocus, errors }) => {
+
+  const { t } = useTranslation();
 
   const [
     tag,
@@ -107,7 +110,7 @@ export const ProjectCreateStep1Form: FC<EditProjectsPropsType> = (
       </Grid>
       <Grid item xs={12}>
         <TextField
-          label="Теги"
+          label={t('tags')}
           fullWidth
           // type={'text'}
           required

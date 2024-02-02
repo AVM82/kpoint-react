@@ -1,6 +1,6 @@
 const ukTranslation = {
   country: 'Україна',
-  projects: 'Проекти',
+  projects: 'Проєкти',
   about_us: 'Про нас',
   sign_in: 'Увійти',
   sign_up: 'Зареєструватись',
@@ -35,6 +35,9 @@ const ukTranslation = {
     donate: 'Зробити внесок',
     support: 'Приєднатися до проекту',
     location: 'Місцезнаходження',
+    back: 'НАЗАД',
+    save: 'ЗБЕРЕГТИ',
+    next: 'ДАЛІ',
   },
   owner: 'Власник',
   description: 'Опис',
@@ -42,6 +45,22 @@ const ukTranslation = {
   team: 'Команда',
   help_project: 'Допомогти проєкту',
   comments: 'Коментарі',
+  general_information: 'Загальна інформація',
+  implementation_plan: 'План реалізації',
+  new_project: 'Новий проєкт',
+  project_idea: 'Ідея. Проблема, яку вирішує проєкт',
+  financing: 'Фінансування',
+  deadline: 'Дедлайн',
+  collect_deadline: 'Дата початку',
+  goal_deadline: 'Дата закінчення',
+  stages_implementation: 'Задачі та Етапи Реалізації',
+  stage: 'Етап',
+  errors: {
+    project_title: 'Назва проєкту не може бути пуста або мати більше 30 символів',
+    project_tags: 'Кількість тегів може бути від 1 до 5',
+    project_summary: 'Короткий опис і мета не може бути пуста або мати більше 150 символів',
+    project_description: 'Опис проєкта не може бути пуста або мати більше 512 символів',
+  },
 };
 
 export { ukTranslation };

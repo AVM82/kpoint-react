@@ -1,17 +1,20 @@
 import { TextField } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { EditProjectsPropsType } from '../../../../common/types/projects/projects';
 
 export const ProjectCreateStep2Form: FC<EditProjectsPropsType> = (
   { projectData, handleChange, handleFieldFocus, errors }) => {
 
+  const { t } = useTranslation();
+
   return (
     <Grid container rowSpacing={3}>
       <Grid item xs={12}>
         <TextField
-          label="Опис проєкта"
+          label={t('description')}
           fullWidth
           value={projectData.description}
           onChange={(e): void => handleChange('description', e.target.value)}
@@ -20,7 +23,7 @@ export const ProjectCreateStep2Form: FC<EditProjectsPropsType> = (
           helperText={errors.description}
           // type={'text'}
           required
-          placeholder={'Ідея. Проблема, яку вирішує проєкт'}
+          placeholder={t('project_idea')}
           multiline
           rows={4}
           // autoComplete="given-name"
@@ -29,7 +32,7 @@ export const ProjectCreateStep2Form: FC<EditProjectsPropsType> = (
       </Grid>
       <Grid item xs={12} mt={6}>
         <TextField
-          label="Фінансування"
+          label={t('financing')}
           fullWidth
           // value={projectData.title}
           // onChange={(e): void => handleChange('title', e.target.value)}
