@@ -1,4 +1,5 @@
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { Chip, ListItem } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -20,6 +21,11 @@ import { authAction } from '../../store/actions';
 
 const defaultTheme = createTheme();
 
+type ChipTag = {
+  key: number;
+  tag: string;
+};
+
 const SignUpPage: FC = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -36,6 +42,30 @@ const SignUpPage: FC = () => {
     description: '',
     tags: [],
   });
+
+  const [
+    tag,
+    setTag,
+  ] = useState('');
+
+  const getChipTags = (): ChipTag[] => {
+    const result: ChipTag[] = [];
+    for (let i = 0; i < formData.tags.length; i++) {
+      result.push({ key: i, tag: formData.tags[i] });
+    }
+
+    return result;
+  };
+
+  const [
+    chipTags,
+    setChipTags,
+  ] = useState<ChipTag[]>(getChipTags());
+
+  const handleDeleteTag = (chipToDelete: ChipTag) => () => {
+    setChipTags((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+    formData.tags = formData.tags.filter((tag) => tag !== chipToDelete.tag);
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -58,14 +88,6 @@ const SignUpPage: FC = () => {
       ...formData,
       [name]: value,
     }));
-  };
-
-  const handleTagsChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ): void => {
-    const tagsInput = event.target.value;
-    const tagsArray = tagsInput.split(',').map((tag) => tag.trim());
-    setFormData({ ...formData, tags: tagsArray });
   };
 
   return (
@@ -166,7 +188,6 @@ const SignUpPage: FC = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   fullWidth
                   name="avatarImgUrl"
                   label={t('avatar_url')}
@@ -176,7 +197,6 @@ const SignUpPage: FC = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   fullWidth
                   name="description"
                   label={t('description')}
@@ -186,14 +206,59 @@ const SignUpPage: FC = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  type={'text'}
                   required
+                  id="projectTags"
+                  name="projectTags"
+                  value={tag}
+                  label="Теги"
                   fullWidth
-                  name="tags"
-                  label={t('tags')}
-                  id="tags"
-                  value={formData.tags.join(', ')}
-                  onChange={handleTagsChange}
+                  variant="outlined"
+                  onChange={ (event): void => {
+                    event.preventDefault();
+                    setTag(event.target.value);
+                  }}
+                  onKeyDown={ ( event ):void => {
+                    if (event.key === 'Enter') {
+                      if (tag.trim().length > 0 && formData.tags.indexOf(tag.trim()) === -1) {
+                        formData.tags.push(tag);
+                        setChipTags(getChipTags);
+                        setTag('');
+                      }
+                      console.log(formData.tags);
+                      event.preventDefault();
+                    }
+                  }}
                 />
+                <Grid
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    flexWrap: 'wrap',
+                    listStyle: 'none',
+                    p: 0.5,
+                    m: 0,
+                  }}
+                  component="ul"
+                >
+                  {chipTags.map((data) => {
+                    return (
+                      <ListItem alignItems={'center'} key={data.key}>
+                        <Chip
+                          sx={{
+                            height: 'auto',
+                            '& .MuiChip-label': {
+                              display: 'block',
+                              whiteSpace: 'normal',
+                            },
+                          }}
+                          label={data.tag}
+                          onDelete={handleDeleteTag(data)}
+                        />
+                      </ListItem>
+                    );
+                  })}
+                </Grid>
               </Grid>
             </Grid>
             <Button
