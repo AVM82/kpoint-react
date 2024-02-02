@@ -1,18 +1,22 @@
 import { TextField } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { EditProjectsPropsType } from '../../../../common/types/projects/projects';
 
 export const ProjectCreateStep3Form: FC<EditProjectsPropsType> = (
   { projectData, handleChange, handleFieldFocus, errors }) => {
+
+  const { t } = useTranslation();
+
   return (
     <Grid container rowSpacing={3}>
-      Дедлайн
+      {t('deadline')}
       <Grid container columnSpacing={10}>
         <Grid item xs={6}>
           <TextField
-            label="Дата початку"
+            label={t('collect_deadline')}
             fullWidth
             value={projectData.collectDeadline}
             // defaultValue={project.collectDeadline}
@@ -29,7 +33,7 @@ export const ProjectCreateStep3Form: FC<EditProjectsPropsType> = (
         </Grid>
         <Grid item xs={6} mb={3}>
           <TextField
-            label="Дата закінчення"
+            label={t('goal_deadline')}
             fullWidth
             value={projectData.goalDeadline}
             // defaultValue={project.goalDeadline}
@@ -45,10 +49,10 @@ export const ProjectCreateStep3Form: FC<EditProjectsPropsType> = (
           />
         </Grid>
       </Grid>
-      Задачі та Етапи Реалізації
+      {t('stages_implementation')}
       <Grid item xs={12}>
         <TextField
-          label="Етап 1"
+          label={t('stage') + ' 1'}
           fullWidth
           // value={projectData.title}
           // onChange={(e): void => handleChange('title', e.target.value)}
@@ -72,7 +76,7 @@ export const ProjectCreateStep3Form: FC<EditProjectsPropsType> = (
       </Grid>
       <Grid item xs={12}>
         <TextField
-          label="Етап 2"
+          label={t('stage') + ' 2'}
           fullWidth
           // error
           type={'text'}
@@ -92,7 +96,7 @@ export const ProjectCreateStep3Form: FC<EditProjectsPropsType> = (
       </Grid>
       <Grid item xs={12}>
         <TextField
-          label="Етап 3"
+          label={t('stage') + ' 3'}
           fullWidth
           // error
           type={'text'}

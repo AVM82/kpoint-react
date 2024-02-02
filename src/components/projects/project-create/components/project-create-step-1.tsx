@@ -1,6 +1,7 @@
 import { Autocomplete, Avatar, Chip, Grid, TextField } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import React, { FC, ReactElement, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { CitiesType,EditProjectsPropsType } from '../../../../common/types/projects/projects';
 import { cities } from './Cities';
@@ -17,6 +18,8 @@ type ChipTag = {
 
 export const ProjectCreateStep1Form: FC<EditProjectsPropsType> = (
   { projectData, handleChange, handleFieldFocus, errors }) => {
+
+  const { t } = useTranslation();
 
   const [
     tag,
@@ -58,7 +61,7 @@ export const ProjectCreateStep1Form: FC<EditProjectsPropsType> = (
         <Grid item xs={9}>
           <Grid item xs={true}>
             <TextField
-              label="Назва проєкту"
+              label={t('project_name')}
               fullWidth
               value={projectData.title}
               // defaultValue={project.title}
@@ -82,7 +85,7 @@ export const ProjectCreateStep1Form: FC<EditProjectsPropsType> = (
               // defaultValue={project.city}
               renderInput={(params): ReactElement => (
                 <TextField
-                  label="Місто"
+                  label={t('city')}
                   {...params}
                   required
                   fullWidth
@@ -94,24 +97,25 @@ export const ProjectCreateStep1Form: FC<EditProjectsPropsType> = (
       </Grid>
       <Grid item xs={12}>
         <TextField
-          label="Категорія"
+          label={t('category')}
           fullWidth
           // value={projectData}
           // type={'text'}
           // required
           // id="projectCategory"
           // name="projectCategory"
-          // autoComplete="given-name"
+          margin={'normal'}
+          autoComplete="given-name"
           variant="outlined"
         />
       </Grid>
       <Grid item xs={12}>
         <TextField
-          label="Теги"
+          label={t('tags')}
           fullWidth
           // type={'text'}
           required
-          placeholder={'Enter tag and press [Enter]'}
+          placeholder={t('tag_placeholder')}
           // id="projectTags"
           // name="projectTags"
           value={tag}
@@ -172,7 +176,7 @@ export const ProjectCreateStep1Form: FC<EditProjectsPropsType> = (
       </Grid>
       <Grid item xs={12}>
         <TextField
-          label="Короткий опис і мета"
+          label={t('summary')}
           fullWidth
           value={projectData.summary}
           onChange={(e): void => handleChange('summary', e.target.value)}
