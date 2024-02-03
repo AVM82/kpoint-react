@@ -16,15 +16,16 @@ const Header: FC = () => {
       alignItems="center"
       sx={{ background: 'lightgray' }}>
       <Grid item>
-        <Link  href="#" underline="none" color="black" sx={{ margin: 1 }}>{t('projects')}</Link>
+        <Link  href="/" underline="none" color="black" sx={{ margin: 1 }}>{t('projects')}</Link>
         <Link  href="#" underline="none" color="black" sx={{ margin: 1 }}>{t('about_us')}</Link>
+        <Link  href="/projects/new" underline="none" color="black" sx={{ margin: 1 }}>{t('new_project')}</Link>
       </Grid>
       <Grid item>
         <Typography variant="h6" align="center">KEY POINTS</Typography>
       </Grid>
       <Grid item>
-        <Button href="/sign-in" variant="outlined" sx={{ margin: 1 }}>{t('log_in')}</Button>
-        <Button href="/sign-up" variant="contained" sx={{ margin: 1 }}>{t('sign_in')}</Button>
+        <Button href="/sign-in" variant="outlined" sx={{ margin: 1 }}>{t('buttons.log_in')}</Button>
+        <Button href="/sign-up" variant="contained" sx={{ margin: 1 }}>{t('buttons.sign_in')}</Button>
       </Grid>
     </Grid>
   );

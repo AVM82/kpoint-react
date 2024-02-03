@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { store } from 'store/store';
 
-import { ProjectsPage } from './components/app/projects-page';
+import { ProjectsPage } from './components/all-projects-page/projects-page';
 import { SignInPage } from './components/auth-page/sign-in-page';
 import { SignUpPage } from './components/auth-page/sign-up-page';
 import { Toast } from './components/common/common';

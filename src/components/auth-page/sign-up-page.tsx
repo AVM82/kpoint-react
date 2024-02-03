@@ -1,4 +1,5 @@
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { Chip, ListItem } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -10,8 +11,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { FC, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { SignUpType } from '../../common/types/sign-up/sign-up';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch.hook';
@@ -19,7 +21,13 @@ import { authAction } from '../../store/actions';
 
 const defaultTheme = createTheme();
 
+type ChipTag = {
+  key: number;
+  tag: string;
+};
+
 const SignUpPage: FC = () => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -32,8 +40,46 @@ const SignUpPage: FC = () => {
     repeatedPassword: '',
     avatarImgUrl: '',
     description: '',
-    tags: [''],
+    tags: [],
   });
+
+  const location = useLocation();
+  const [userData, setUserData] = useState({
+    email: '',
+    avatarImgUrl: '',
+  });
+
+  useEffect(() => {
+    console.log('location.state', location.state);
+
+    if (location.state && location.state.userData) {
+      setUserData(location.state.userData);
+    }
+  }, [location.state]);
+
+  const [
+    tag,
+    setTag,
+  ] = useState('');
+
+  const getChipTags = (): ChipTag[] => {
+    const result: ChipTag[] = [];
+    for (let i = 0; i < formData.tags.length; i++) {
+      result.push({ key: i, tag: formData.tags[i] });
+    }
+
+    return result;
+  };
+
+  const [
+    chipTags,
+    setChipTags,
+  ] = useState<ChipTag[]>(getChipTags());
+
+  const handleDeleteTag = (chipToDelete: ChipTag) => () => {
+    setChipTags((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+    formData.tags = formData.tags.filter((tag) => tag !== chipToDelete.tag);
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -58,14 +104,6 @@ const SignUpPage: FC = () => {
     }));
   };
 
-  const handleTagsChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ): void => {
-    const tagsInput = event.target.value;
-    const tagsArray = tagsInput.split(',').map((tag) => tag.trim());
-    setFormData({ ...formData, tags: tagsArray });
-  };
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -82,7 +120,7 @@ const SignUpPage: FC = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            {t('sign_up')}
           </Typography>
           <Box
             component="form"
@@ -98,7 +136,7 @@ const SignUpPage: FC = () => {
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  label={t('first_name')}
                   onChange={handleOnChange}
                   autoFocus
                 />
@@ -108,7 +146,7 @@ const SignUpPage: FC = () => {
                   required
                   fullWidth
                   id="lastName"
-                  label="Last Name"
+                  label={t('last_name')}
                   name="lastName"
                   autoComplete="family-name"
                   onChange={handleOnChange}
@@ -120,7 +158,7 @@ const SignUpPage: FC = () => {
                   required
                   fullWidth
                   id="username"
-                  label="Username"
+                  label={t('username')}
                   name="username"
                   autoComplete="username"
                   onChange={handleOnChange}
@@ -132,8 +170,9 @@ const SignUpPage: FC = () => {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label={t('email')}
                   name="email"
+                  value={userData.email}
                   autoComplete="email"
                   onChange={handleOnChange}
                 />
@@ -143,7 +182,7 @@ const SignUpPage: FC = () => {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label={t('password')}
                   type="password"
                   id="password"
                   autoComplete="new-password"
@@ -155,7 +194,7 @@ const SignUpPage: FC = () => {
                   required
                   fullWidth
                   name="repeatedPassword"
-                  label="Repeated Password"
+                  label={t('repeated_password')}
                   type="password"
                   id="password"
                   autoComplete="new-password"
@@ -164,34 +203,78 @@ const SignUpPage: FC = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   fullWidth
                   name="avatarImgUrl"
-                  label="AvatarUrl"
+                  value={userData.avatarImgUrl}
+                  label={t('avatar_url')}
                   id="avatarImgUrl"
                   onChange={handleOnChange}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   fullWidth
                   name="description"
-                  label="Description"
+                  label={t('description')}
                   id="description"
                   onChange={handleOnChange}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  type={'text'}
                   required
+                  id="projectTags"
+                  name="projectTags"
+                  value={tag}
+                  label="Теги"
                   fullWidth
-                  name="tags"
-                  label="Tags"
-                  id="tags"
-                  value={formData.tags.join(', ')}
-                  onChange={handleTagsChange}
+                  variant="outlined"
+                  onChange={ (event): void => {
+                    event.preventDefault();
+                    setTag(event.target.value);
+                  }}
+                  onKeyDown={ ( event ):void => {
+                    if (event.key === 'Enter') {
+                      if (tag.trim().length > 0 && formData.tags.indexOf(tag.trim()) === -1) {
+                        formData.tags.push(tag);
+                        setChipTags(getChipTags);
+                        setTag('');
+                      }
+                      console.log(formData.tags);
+                      event.preventDefault();
+                    }
+                  }}
                 />
+                <Grid
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    flexWrap: 'wrap',
+                    listStyle: 'none',
+                    p: 0.5,
+                    m: 0,
+                  }}
+                  component="ul"
+                >
+                  {chipTags.map((data) => {
+                    return (
+                      <ListItem alignItems={'center'} key={data.key}>
+                        <Chip
+                          sx={{
+                            height: 'auto',
+                            '& .MuiChip-label': {
+                              display: 'block',
+                              whiteSpace: 'normal',
+                            },
+                          }}
+                          label={data.tag}
+                          onDelete={handleDeleteTag(data)}
+                        />
+                      </ListItem>
+                    );
+                  })}
+                </Grid>
               </Grid>
             </Grid>
             <Button
@@ -200,12 +283,12 @@ const SignUpPage: FC = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2, bgcolor: '#757575' }}
             >
-              Sign Up
+              {t('sign_up')}
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href={'/sign-in'} variant="body2">
-                  Already have an account? Sign in
+                  {t('already_have_an_account')}
                 </Link>
               </Grid>
             </Grid>

@@ -1,5 +1,7 @@
 import { Box, Button, Container, CssBaseline, Paper, Step, StepLabel, Stepper, Typography } from '@mui/material';
-import React, { FC, useState } from 'react';
+import React, { FC, ReactElement, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { projectAction } from 'store/actions';
 
 import { ProjectsEditType } from '../../../common/types/projects/projects';
@@ -9,49 +11,116 @@ import { ProjectCreateStep1Form } from './components/project-create-step-1';
 import { ProjectCreateStep2Form } from './components/project-create-step-2';
 import { ProjectCreateStep3Form } from './components/project-create-step-3';
 
-const steps: string[] = ['Загальна інформація', 'Про проєкт', 'План реалізації'];
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const getStepContent = (
-  step: number,
-  newProject: ProjectsEditType,
-  setProject: (project: ProjectsEditType) => void,
-) => {
-  switch(step) {
-  case 1: return <ProjectCreateStep1Form project={ newProject } setProject={ setProject }/>;
-  case 2: return <ProjectCreateStep2Form project={ newProject } setProject={ setProject }/>;
-  case 3: return <ProjectCreateStep3Form project={ newProject } setProject={ setProject }/>;
-  default: throw new Error('Unknown step');
-  }
-};
-
 export const ProjectCreate: FC = () => {
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+
+  const steps: string[] = [
+    t('general_information'),
+    t('about'),
+    t('implementation_plan')];
 
   const [
-    newProject,
-    setNewProject,
-  ] = useState<ProjectsEditType>(projectDefault);
+    errors,
+    setErrors,
+  ] = useState<Record<string, string>>({});
 
   const [
     activeStep,
     setActiveStep,
   ] = useState(1);
 
-  const handleNext = (): void => {
-    setActiveStep(activeStep + 1);
+  const [
+    projectData,
+    setProjectData,
+  ] = useState<ProjectsEditType>(projectDefault);
 
-    setNewProject(newProject);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleNext = (): void => {
+    const validationErrors = validateForm(projectData);
+
+    if (Object.keys(validationErrors).length === 0) {
+      setErrors({});
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    } else {
+      setErrors(validationErrors);
+    }
 
     if (activeStep === steps.length) {
-      dispatch(projectAction.createNew({ newProject }));
+      dispatch(projectAction.createNew({ projectData }))
+        .unwrap()
+        .then((action): void => {
+          console.log(action);
+          navigate('/projects/' + action.projectId);
+        })
+        .catch((reason) => {
+          console.log(reason);
+        });
     }
   };
 
   const handleBack = () : void => {
-    setActiveStep(activeStep - 1);
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleChange = (field: string, value: string): void => {
+    setProjectData((prevData) => ({ ...prevData, [field]: value }));
+  };
+
+  const handleFieldFocus = (field: string): void => {
+    setErrors((prevErrors) => ({ ...prevErrors, [field]: '' }));
+  };
+
+  const validateForm = (data: ProjectsEditType): Record<string, string> => {
+    const errors: Record<string, string> = {};
+
+    switch(activeStep) {
+    case 1: {
+      if (!data.title.trim() || data.title.trim().length > 30) {
+        errors.title = t('errors.project_title');
+      } else if (data.tags.length < 1 || data.tags.length > 5) {
+        errors.tags = t('errors.project_tags');
+      } else if (!data.summary.trim() || data.summary.trim().length > 150) {
+        errors.summary = t('errors.project_summary');
+      }
+      break;
+    }
+    case 2: {
+      if (!data.description.trim() || data.description.trim().length > 512) {
+        errors.description = t('errors.project_description');
+      }
+      break;
+    }
+    case 3: {
+      break;
+    }
+    }
+
+    return errors;
+  };
+  const getStepContent = (
+    step: number,
+  ): ReactElement => {
+    switch(step) {
+    case 1: return <ProjectCreateStep1Form
+      projectData={ projectData }
+      handleChange={ handleChange }
+      handleFieldFocus={ handleFieldFocus }
+      errors={ errors }/>;
+    case 2: return <ProjectCreateStep2Form
+      projectData={ projectData }
+      handleChange={ handleChange }
+      handleFieldFocus={ handleFieldFocus }
+      errors={ errors }/>;
+    case 3: return <ProjectCreateStep3Form
+      projectData={ projectData }
+      handleChange={ handleChange }
+      handleFieldFocus={ handleFieldFocus }
+      errors={ errors }/>;
+    default: throw new Error('Unknown step');
+    }
   };
 
   return (
@@ -59,7 +128,7 @@ export const ProjectCreate: FC = () => {
       <CssBaseline/>
       <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
         <Typography component="h1" variant="h4" align="center" sx={{ p: 2 }}>
-          Новий проєкт
+          {t('new_project')}
         </Typography>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 1 }, p: { xs: 2, md: 3 } }}>
           <Stepper activeStep={activeStep - 1} sx={{ pt: 3, pb: 5 }}>
@@ -70,22 +139,16 @@ export const ProjectCreate: FC = () => {
             ))}
           </Stepper>
           {activeStep > steps.length ? (
-            <React.Fragment>
-              <Typography variant="h5" gutterBottom>
-                Новий проект створено.
-              </Typography>
-              <Typography variant="subtitle1">
-                Ми надіслали підтвердження вашого замовлення електронною поштою та надішлемо вам оновлення,
-                коли ваше замовлення буде доставлено.
-              </Typography>
-            </React.Fragment>
+            <Typography variant="h5" gutterBottom>
+              Новий проєкт не створено.
+            </Typography>
           ) : (
             <React.Fragment>
-              {getStepContent(activeStep, newProject, setNewProject)}
+              {getStepContent(activeStep)}
               <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                 {activeStep !== 1 && (
                   <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                    НАЗАД
+                    {t('buttons.back')}
                   </Button>
                 )}
                 <Button
@@ -93,7 +156,7 @@ export const ProjectCreate: FC = () => {
                   onClick={handleNext}
                   sx={{ mt: 3, ml: 1 }}
                 >
-                  {activeStep === steps.length ? 'ЗБЕРЕГТИ' : 'ДАЛІ'}
+                  {activeStep === steps.length ? t('buttons.save') : t('buttons.next')}
                 </Button>
               </Box>
             </React.Fragment>

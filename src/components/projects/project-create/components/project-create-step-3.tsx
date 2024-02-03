@@ -1,65 +1,70 @@
 import { TextField } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { EditProjectsPropsType } from '../../../../common/types/projects/projects';
 
-export const ProjectCreateStep3Form: FC<EditProjectsPropsType> = ({ project, setProject }) => {
+export const ProjectCreateStep3Form: FC<EditProjectsPropsType> = (
+  { projectData, handleChange, handleFieldFocus, errors }) => {
+
+  const { t } = useTranslation();
+
   return (
     <Grid container rowSpacing={3}>
-      Дедлайн
+      {t('deadline')}
       <Grid container columnSpacing={10}>
         <Grid item xs={6}>
           <TextField
-            // error
+            label={t('collect_deadline')}
+            fullWidth
+            value={projectData.collectDeadline}
+            // defaultValue={project.collectDeadline}
+            onChange={(e): void => handleChange('collectDeadline', e.target.value)}
+            onFocus={(): void => handleFieldFocus('collectDeadline')}
+            error={!!errors.collectDeadline}
+            helperText={errors.collectDeadline}
             type={'date'}
             required
-            id="projectDeadlineStart"
-            name="projectDeadlineStart"
-            label="Дата початку"
-            fullWidth
             margin={'normal'}
             // autoComplete="given-name"
             variant="outlined"
-            defaultValue={project.collectDeadline}
-            onChange={ (event: React.ChangeEvent<HTMLInputElement>): void => {
-              event.preventDefault();
-              project.goalDeadline = event.target.value;
-              setProject(project);
-            }}
           />
         </Grid>
         <Grid item xs={6} mb={3}>
           <TextField
-            // error
+            label={t('goal_deadline')}
+            fullWidth
+            value={projectData.goalDeadline}
+            // defaultValue={project.goalDeadline}
+            onChange={(e): void => handleChange('goalDeadline', e.target.value)}
+            onFocus={(): void => handleFieldFocus('goalDeadline')}
+            error={!!errors.goalDeadline}
+            helperText={errors.goalDeadline}
             type={'date'}
             required
-            id="projectDeadlineEnd"
-            name="projectDeadlineEnd"
-            label="Дата закінчення"
-            fullWidth
             margin={'normal'}
             // autoComplete="given-name"
             variant="outlined"
-            defaultValue={project.goalDeadline}
-            // onChange={ (event: React.ChangeEvent<HTMLInputElement>): void => {
-            //   setName(event.target.value);
-            // }}
           />
         </Grid>
       </Grid>
-      Задачі та Етапи Реалізації
+      {t('stages_implementation')}
       <Grid item xs={12}>
         <TextField
-          // error
-          type={'text'}
+          label={t('stage') + ' 1'}
+          fullWidth
+          // value={projectData.title}
+          // onChange={(e): void => handleChange('title', e.target.value)}
+          // onFocus={(): void => handleFieldFocus('title')}
+          // error={!!errors.title}
+          // helperText={errors.title}
+          // type={'text'}
           // required
           // id="description"
           // name="description"
-          label="Етап 1"
           // helperText={'Ідея. Проблема, яку вирішує проєкт'}
           // value={project.description}
-          fullWidth
           // autoComplete="given-name"
           variant="outlined"
           // onChange={ (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -71,15 +76,15 @@ export const ProjectCreateStep3Form: FC<EditProjectsPropsType> = ({ project, set
       </Grid>
       <Grid item xs={12}>
         <TextField
+          label={t('stage') + ' 2'}
+          fullWidth
           // error
           type={'text'}
           // required
           // id="description"
           // name="description"
-          label="Етап 2"
           // helperText={'Ідея. Проблема, яку вирішує проєкт'}
           // value={project.description}
-          fullWidth
           // autoComplete="given-name"
           variant="outlined"
           // onChange={ (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -91,15 +96,15 @@ export const ProjectCreateStep3Form: FC<EditProjectsPropsType> = ({ project, set
       </Grid>
       <Grid item xs={12}>
         <TextField
+          label={t('stage') + ' 3'}
+          fullWidth
           // error
           type={'text'}
           // required
           // id="description"
           // name="description"
-          label="Етап 3"
           // helperText={'Ідея. Проблема, яку вирішує проєкт'}
           // value={project.description}
-          fullWidth
           // autoComplete="given-name"
           variant="outlined"
           // onChange={ (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -111,15 +116,15 @@ export const ProjectCreateStep3Form: FC<EditProjectsPropsType> = ({ project, set
       </Grid>
       <Grid item xs={12}>
         <TextField
-          // error
-          type={'text'}
-          // required
-          // id="description"
-          // name="description"
           label="Етап 4"
+          fullWidth
+          // error
+          type={'text'}
+          // required
+          // id="description"
+          // name="description"
           // helperText={'Ідея. Проблема, яку вирішує проєкт'}
           // value={project.description}
-          fullWidth
           // autoComplete="given-name"
           variant="outlined"
           // onChange={ (event: React.ChangeEvent<HTMLInputElement>): void => {
