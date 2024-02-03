@@ -3,28 +3,32 @@ import { FC, useEffect } from 'react';
 import GoogleButton from 'react-google-button';
 import { useNavigate } from 'react-router-dom';
 
+import { ENV } from '../../common/enums/app/env.enum';
 import { StorageKey } from '../../common/enums/app/storage-key.enum';
 import { storage } from '../../services/services';
 
 const OAuth2: FC = () => {
+
   const navigate = useNavigate();
+  const redirectUri = window.location.origin;
 
   const login = useGoogleLogin({
-    redirect_uri: 'http://localhost:5001/api/auth/oauth2',
+    redirect_uri: redirectUri,
+    flow: 'auth-code',
     onSuccess: async (response) => {
+
       try {
-        const backendResponse = await fetch(
-          'http://localhost:5001/api/auth/oauth2',
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              code: response.code,
-            }),
+        const backendResponse = await fetch(ENV.API_PATH + '/auth/oauth2', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
           },
-        );
+
+          body: JSON.stringify({
+            code: response.code,
+            redirectUri: redirectUri,
+          }),
+        });
 
         if (!backendResponse.ok) {
           throw new Error(`HTTP error! Status: ${backendResponse.status}`);
@@ -46,7 +50,6 @@ const OAuth2: FC = () => {
         console.error('Error making POST request to backend:', error.message);
       }
     },
-    flow: 'auth-code',
   });
 
   useEffect(() => {
