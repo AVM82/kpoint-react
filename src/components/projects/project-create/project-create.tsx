@@ -6,7 +6,7 @@ import { projectAction } from 'store/actions';
 
 import { ProjectsEditType } from '../../../common/types/projects/projects';
 import { useAppDispatch } from '../../../hooks/hooks';
-import { projectDefault } from './components/ProgectDefault';
+import { projectDefault } from './components/progect-default';
 import { ProjectCreateStep1Form } from './components/project-create-step-1';
 import { ProjectCreateStep2Form } from './components/project-create-step-2';
 import { ProjectCreateStep3Form } from './components/project-create-step-3';

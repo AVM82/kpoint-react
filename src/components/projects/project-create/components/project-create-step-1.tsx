@@ -4,7 +4,7 @@ import React, { FC, ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { CitiesType,EditProjectsPropsType } from '../../../../common/types/projects/projects';
-import { cities } from './Cities';
+import { cities } from './cities';
 
 const citiesProps = {
   options: cities,

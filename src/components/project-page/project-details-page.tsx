@@ -1,3 +1,4 @@
+import { CircularProgress } from '@mui/material';
 import { FC, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { projectAction } from 'store/actions';
@@ -29,7 +30,7 @@ const ProjectDetailsPage: FC = () => {
           project={project}
           allStatuses={['NEW', 'GATHERING_FOR_START', 'EARNING', 'SUSPENDED', 'FAILED', 'SUCCESSFUL']} />
       ) : (
-        <p>No data</p>
+        <CircularProgress color="inherit" />
       )}
     </div>
   );
