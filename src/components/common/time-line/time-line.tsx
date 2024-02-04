@@ -20,8 +20,8 @@ export const CustomTimeline: FC<{ allStatuses: string[];
               <TimelineDot color={status === currentStatus ? 'success' : 'grey'} />
               {index < allStatuses.length - 1 && <TimelineConnector />}
             </TimelineSeparator>
-            <TimelineContent>
-              <Typography>{t(`statuses.${status}`)}</Typography>
+            <TimelineContent sx={{ maxWidth: '200px', ml: -2, mr: 1 }}>
+              <Typography sx={{ fontSize: '0.8rem' }}>{t(`statuses.${status}`)}</Typography>
             </TimelineContent>
           </TimelineItem>
         ))}
