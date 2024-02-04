@@ -9,10 +9,11 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { ProjectType } from 'common/types/projects/project.type';
-import Logo from 'Logo.jpg';
+import Logo from 'logo.jpg';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { CustomTabPanel } from '../../utils/function-custom-tab-panel';
 import { generateGoogleMapsLink } from '../../utils/function-generate-google-maps-link';
 import { getSocialMediaIcon } from '../../utils/function-social-media-icons';
 import { CustomTimeline } from '../common/common';
@@ -22,9 +23,21 @@ interface ProjectPageProps {
   allStatuses: string[];
 }
 
+function getTabAccessibilityProps(index: number): { id: string, 'aria-controls': string } {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
 const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
 
   const { t } = useTranslation();
+  const logo = project.logoImgUrl === null ? { Logo } : project.logoImgUrl;
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
+    setValue(newValue);
+  };
 
   return (
     <Paper>
@@ -92,7 +105,7 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
                   <CardMedia
                     component="img"
                     height="194"
-                    image={Logo}
+                    image={`data:image/png;base64,${logo}`}
                     alt="Logo"
                   />
                 </Card>
@@ -115,7 +128,7 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
                   ))}
                 </Grid>
               </Grid>
-              {/* Project Details*/}
+              {/* Project title, google maps link*/}
               <Grid item xs={12} sm container>
                 <Grid item xs container direction="column" spacing={2}>
                   <Grid item xs>
@@ -173,7 +186,7 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
                           width: '250px',
                         }}
                       >
-                        <PersonAddIcon/>
+                        <PersonAddIcon />
                         {t('buttons.support')}</Button>
                     </Box>
                     <Box>
@@ -191,7 +204,7 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
                           width: '250px',
                         }}
                       >
-                        <AttachMoneyIcon/>
+                        <AttachMoneyIcon />
                         {t('buttons.donate')}</Button>
                     </Box>
                   </Grid>
@@ -207,47 +220,45 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
           margin: 'auto',
           bgcolor: 'white',
           maxWidth: 900,
-          maxHeight: 284,
+          mixHeight: 284,
           flexGrow: 1,
         }}
       >
-        <Box sx={{ width: '100%' }}>
-          <Tabs value={0}
-            aria-label="nav tabs example"
-            role="navigation"
-          >
-            <Tab label={t('about')} />
-            <Tab label={t('team')} />
-            <Tab label={t('help_project')} />
-            <Tab label={t('comments')} />
-          </Tabs>
-        </Box>
-      </Paper>
-      <Paper
-        sx={{
-          p: 2,
-          margin: 'auto',
-          bgcolor: 'white',
-          maxWidth: 900,
-          minHeight: 580,
-          flexGrow: 1,
-        }}
-      >
-        <Grid container spacing={2}>
+        <Grid container spacing={0}>
           {/* Left Column Description */}
-          <Grid item xs={6}>
-            <Typography gutterBottom variant="subtitle1" component="div">
-              <Box fontWeight="fontWeightBold">Description:</Box>
-              {'\n'}
-              {project.description}
-            </Typography>
+          <Grid item xs={8}>
+            <Box sx={{ width: '100%' }}>
+              <Box sx={{ width: '100%' }}>
+                <Tabs value={value} onChange={handleChange} aria-label="nav tabs example">
+                  <Tab label={t('about')} {...getTabAccessibilityProps(0)} />
+                  <Tab label={t('team')} {...getTabAccessibilityProps(1)} />
+                  <Tab label={t('help_project')} {...getTabAccessibilityProps(2)} />
+                  <Tab label={t('comments')} {...getTabAccessibilityProps(3)} />
+                </Tabs>
+              </Box>
+              <CustomTabPanel value={value} index={0}>
+                <Box fontWeight="fontWeightBold">{t('description')}:</Box>
+                {'\n'}
+                {project.description}
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={1}>
+                <Box fontWeight="fontWeightBold">{t('team')}:</Box>
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={2}>
+                <Box fontWeight="fontWeightBold">{t('help_project')}:</Box>
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={3}>
+                <Box fontWeight="fontWeightBold">{t('comments')}:</Box>
+              </CustomTabPanel>
+            </Box>
           </Grid>
 
           {/* Right Column project state*/}
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <CustomTimeline allStatuses={allStatuses} currentStatus={project.state} />
           </Grid>
         </Grid>
+
       </Paper>
     </Paper>
   );

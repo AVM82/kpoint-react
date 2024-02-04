@@ -33,7 +33,7 @@ const ukTranslation = {
   buttons: {
     subscribe: 'Підписатися',
     donate: 'Зробити внесок',
-    support: 'Приєднатися до проекту',
+    support: 'Приєднатися до проєкту',
     location: 'Місцезнаходження',
     log_in: 'Увійти',
     sign_in: 'Приєднатись',
