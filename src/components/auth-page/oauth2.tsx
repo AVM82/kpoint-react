@@ -10,10 +10,8 @@ import { storage } from '../../services/services';
 const OAuth2: FC = () => {
 
   const navigate = useNavigate();
-  const redirectUri = window.location.origin;
 
   const login = useGoogleLogin({
-    redirect_uri: redirectUri,
     flow: 'auth-code',
     onSuccess: async (response) => {
 
@@ -26,7 +24,6 @@ const OAuth2: FC = () => {
 
           body: JSON.stringify({
             code: response.code,
-            redirectUri: redirectUri,
           }),
         });
 

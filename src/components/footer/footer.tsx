@@ -16,7 +16,12 @@ const Footer: FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Container maxWidth={false} sx={{ bgcolor: 'lightgray', paddingBottom: 5 }}>
+    <Container maxWidth={false} sx={{
+      bgcolor: 'lightgray',
+      paddingBottom: 5,
+      borderTop: '1px solid #000',
+      marginTop: 'auto',
+      p: 4 }}>
       <Grid container
         direction="row"
         justifyContent="space-between"

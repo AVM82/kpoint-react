@@ -1,5 +1,6 @@
 import './i18n/i18n';
 
+import { Box } from '@mui/material';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
@@ -21,15 +22,23 @@ root.render(
   <StrictMode>
     <Provider store={store}>
       <Header/>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<ProjectsPage/>}/>
-          <Route path="projects/:projectId" element={<ProjectDetailsPage/>}/>
-          <Route path="/projects/new" element={<ProjectCreate/>}/>
-          <Route path="/sign-in" element={<SignInPage/>}/>
-          <Route path="/sign-up" element={<SignUpPage/>}/>
-        </Routes>
-      </BrowserRouter>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+        }}
+      >
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<ProjectsPage/>}/>
+            <Route path="/projects/:projectId" element={<ProjectDetailsPage/>}/>
+            <Route path="/projects/new" element={<ProjectCreate/>}/>
+            <Route path="/sign-in" element={<SignInPage/>}/>
+            <Route path="/sign-up" element={<SignUpPage/>}/>
+          </Routes>
+        </BrowserRouter>
+      </Box>
       <Footer/>
       <Toast />
     </Provider>

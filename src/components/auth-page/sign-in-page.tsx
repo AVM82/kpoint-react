@@ -124,7 +124,7 @@ const SignInPage: FC = () => {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, bgcolor: '#757575' }}
+                sx={{ mt: 3, bgcolor: '#757575' }}
               >
                 {t('sign_in')}
               </Button>
@@ -132,7 +132,8 @@ const SignInPage: FC = () => {
                 spacing={0}
                 direction="column"
                 alignItems="center"
-                justifyContent="center">
+                justifyContent="center"
+                sx={{ mt: 3, mb: 2 }}>
                 <GoogleOAuthProvider clientId={ENV.OAUTH2_GOOGLE_CLIENT_ID}>
                   <OAuth2></OAuth2>
                 </GoogleOAuthProvider>
