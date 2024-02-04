@@ -9,7 +9,7 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { ProjectType } from 'common/types/projects/project.type';
-import Logo from 'logo.jpg';
+import logo from 'logo.jpg';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -33,7 +33,9 @@ function getTabAccessibilityProps(index: number): { id: string, 'aria-controls':
 const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
 
   const { t } = useTranslation();
-  const logo = project.logoImgUrl === null ? { Logo } : project.logoImgUrl;
+  const projectImage: string = project.logoImgUrl === null ? { logo }.logo
+    : `data:image/png;base64,${project.logoImgUrl}`;
+
   const [value, setValue] = React.useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
     setValue(newValue);
@@ -105,7 +107,7 @@ const ProjectPage: FC<ProjectPageProps> = ({ project, allStatuses }) => {
                   <CardMedia
                     component="img"
                     height="194"
-                    image={`data:image/png;base64,${logo}`}
+                    image={projectImage}
                     alt="Logo"
                   />
                 </Card>
