@@ -75,6 +75,7 @@ const enTranslation = {
     project_tags: 'The number of tags can be from 1 to 5',
     project_summary: 'Short description and purpose cannot be empty or have more than 150 characters',
     project_description: 'The project description cannot be empty or have more than 512 characters',
+    project_deadline: 'The collection deadline cannot be later than the goal deadline',
   },
 };
 

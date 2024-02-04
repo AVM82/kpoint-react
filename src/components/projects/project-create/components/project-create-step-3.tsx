@@ -22,8 +22,8 @@ export const ProjectCreateStep3Form: FC<EditProjectsPropsType> = (
             // defaultValue={project.collectDeadline}
             onChange={(e): void => handleChange('collectDeadline', e.target.value)}
             onFocus={(): void => handleFieldFocus('collectDeadline')}
-            error={!!errors.collectDeadline}
-            helperText={errors.collectDeadline}
+            error={!!errors.deadline}
+            helperText={errors.deadline}
             type={'date'}
             required
             margin={'normal'}
@@ -39,8 +39,8 @@ export const ProjectCreateStep3Form: FC<EditProjectsPropsType> = (
             // defaultValue={project.goalDeadline}
             onChange={(e): void => handleChange('goalDeadline', e.target.value)}
             onFocus={(): void => handleFieldFocus('goalDeadline')}
-            error={!!errors.goalDeadline}
-            helperText={errors.goalDeadline}
+            error={!!errors.deadline}
+            helperText={errors.deadline}
             type={'date'}
             required
             margin={'normal'}

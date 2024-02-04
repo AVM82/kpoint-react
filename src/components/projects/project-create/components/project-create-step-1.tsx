@@ -4,7 +4,7 @@ import React, { FC, ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { CitiesType,EditProjectsPropsType } from '../../../../common/types/projects/projects';
-import { cities } from './Cities';
+import { cities } from './cities';
 
 const citiesProps = {
   options: cities,
@@ -51,8 +51,8 @@ export const ProjectCreateStep1Form: FC<EditProjectsPropsType> = (
         <Grid item xs={3}>
           <Avatar
             alt="Логотип"
-            src="/avatar_default.svg"
-            sx={{ width: 116, height: 116, border: 1, mt: 2.5, ml: 4 }}
+            src="/logo.jpg"
+            sx={{ width: 116, height: 116, mt: 2.5, ml: 4 }}
             variant="rounded"
           >
           </Avatar>

@@ -6,10 +6,10 @@ import { projectAction } from 'store/actions';
 
 import { ProjectsEditType } from '../../../common/types/projects/projects';
 import { useAppDispatch } from '../../../hooks/hooks';
-import { projectDefault } from './components/ProgectDefault';
 import { ProjectCreateStep1Form } from './components/project-create-step-1';
 import { ProjectCreateStep2Form } from './components/project-create-step-2';
 import { ProjectCreateStep3Form } from './components/project-create-step-3';
+import { projectDefault } from './components/project-default';
 
 export const ProjectCreate: FC = () => {
 
@@ -94,6 +94,9 @@ export const ProjectCreate: FC = () => {
       break;
     }
     case 3: {
+      if (new Date(data.goalDeadline) < new Date(data.collectDeadline)) {
+        errors.deadline = t('errors.project_deadline');
+      }
       break;
     }
     }
