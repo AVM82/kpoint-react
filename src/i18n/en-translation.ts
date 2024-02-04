@@ -45,6 +45,8 @@ const enTranslation = {
     back: 'BACK',
     save: 'SAVE',
     next: 'NEXT',
+    log_out: 'Log out',
+    create_project: 'Create project',
   },
   owner: 'Owner',
   description: 'Description',
