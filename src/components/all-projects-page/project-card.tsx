@@ -67,11 +67,6 @@ const ProjectCard: FC<ProjectsProps> = ({ project_id, title, summary,
       <CardActions>
         <Stack direction="row" spacing={1}>
           {tags.map((tag) => <Chip label={'#'.concat(tag)} />)}
-          <Chip label="#java" />
-          <Chip label="#react" />
-          <Chip label="#postgres" />
-          <Chip label="#redux" />
-          <Chip label="#toolkit" />
         </Stack>
         <Button size="small" endIcon={ <ArrowForwardTwoToneIcon/> } href={'projects/'.concat(project_id)}>
           {t('buttons.learn_more')}

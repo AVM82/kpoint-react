@@ -53,7 +53,8 @@ const SignUpPage: FC = () => {
     console.log('location.state', location.state);
 
     if (location.state && location.state.userData) {
-      setUserData(location.state.userData);
+      const { email, avatarImgUrl } = location.state.userData;
+      setUserData({ email, avatarImgUrl });
     }
   }, [location.state]);
 
@@ -71,20 +72,26 @@ const SignUpPage: FC = () => {
     return result;
   };
 
-  const [
-    chipTags,
-    setChipTags,
-  ] = useState<ChipTag[]>(getChipTags());
+  const [chipTags, setChipTags] = useState<ChipTag[]>(getChipTags());
 
   const handleDeleteTag = (chipToDelete: ChipTag) => () => {
-    setChipTags((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+    setChipTags((chips) =>
+      chips.filter((chip) => chip.key !== chipToDelete.key),
+    );
     formData.tags = formData.tags.filter((tag) => tag !== chipToDelete.tag);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
+    console.log('formData');
     console.log(formData);
-    dispatch(authAction.register(formData))
+    const dataToSend = {
+      ...formData,
+      email: userData.email || formData.email,
+      avatarImgUrl: userData.avatarImgUrl || formData.avatarImgUrl,
+    };
+
+    dispatch(authAction.register(dataToSend))
       .unwrap()
       .then((user) => {
         console.log(user);
@@ -172,9 +179,10 @@ const SignUpPage: FC = () => {
                   id="email"
                   label={t('email')}
                   name="email"
-                  value={userData.email}
+                  value={userData.email || formData.email}
                   autoComplete="email"
                   onChange={handleOnChange}
+                  disabled={!!userData.email}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -205,7 +213,7 @@ const SignUpPage: FC = () => {
                 <TextField
                   fullWidth
                   name="avatarImgUrl"
-                  value={userData.avatarImgUrl}
+                  value={ formData.avatarImgUrl || userData.avatarImgUrl }
                   label={t('avatar_url')}
                   id="avatarImgUrl"
                   onChange={handleOnChange}
@@ -230,11 +238,11 @@ const SignUpPage: FC = () => {
                   label="Теги"
                   fullWidth
                   variant="outlined"
-                  onChange={ (event): void => {
+                  onChange={(event): void => {
                     event.preventDefault();
                     setTag(event.target.value);
                   }}
-                  onKeyDown={ ( event ):void => {
+                  onKeyDown={(event): void => {
                     if (event.key === 'Enter') {
                       if (tag.trim().length > 0 && formData.tags.indexOf(tag.trim()) === -1) {
                         formData.tags.push(tag);

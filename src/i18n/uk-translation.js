@@ -45,6 +45,8 @@ const ukTranslation = {
     back: 'НАЗАД',
     save: 'ЗБЕРЕГТИ',
     next: 'ДАЛІ',
+    log_out: 'Вийти',
+    create_project: 'Створити проект',
   },
   owner: 'Власник',
   description: 'Опис',
