@@ -9,7 +9,7 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { ProjectType } from 'common/types/projects/project.type';
-import Logo from 'Logo.jpg';
+import Logo from 'logo.jpg';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
