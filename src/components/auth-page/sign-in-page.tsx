@@ -80,7 +80,6 @@ const SignInPage: FC = () => {
           <Typography>{t('sign_in_to_continue')}</Typography>
           <Box
             component="form"
-            noValidate
             sx={{ mt: 1 }}
             onSubmit={handleSubmit}
           >

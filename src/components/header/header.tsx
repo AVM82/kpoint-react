@@ -48,7 +48,7 @@ const Header: FC = () => {
         <Typography variant="h6" align="center">KEY POINTS</Typography>
       </Grid>
       <Grid item>
-        <HeaderButtons isLoggedIn={true}/>
+        <HeaderButtons isLoggedIn={false}/>
       </Grid>
     </Grid>
   );

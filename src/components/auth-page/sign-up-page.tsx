@@ -131,7 +131,6 @@ const SignUpPage: FC = () => {
           </Typography>
           <Box
             component="form"
-            noValidate
             onSubmit={handleSubmit}
             sx={{ mt: 3 }}
           >
@@ -231,7 +230,6 @@ const SignUpPage: FC = () => {
               <Grid item xs={12}>
                 <TextField
                   type={'text'}
-                  required
                   id="projectTags"
                   name="projectTags"
                   value={tag}
