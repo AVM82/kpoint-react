@@ -30,6 +30,7 @@ const SignUpPage: FC = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [registerError, setRegisterError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<SignUpType>({
     firstName: '',
@@ -59,10 +60,7 @@ const SignUpPage: FC = () => {
     }
   }, [location.state]);
 
-  const [
-    tag,
-    setTag,
-  ] = useState('');
+  const [tag, setTag] = useState('');
 
   const getChipTags = (): ChipTag[] => {
     const result: ChipTag[] = [];
@@ -133,6 +131,10 @@ const SignUpPage: FC = () => {
         if (user != null) {
           navigate('/sign-in');
         }
+      })
+      .catch((error) => {
+        console.error('Невірно введені дані:', error);
+        setRegisterError('Невірно введені дані');
       });
   };
 
@@ -318,6 +320,7 @@ const SignUpPage: FC = () => {
                   })}
                 </Grid>
               </Grid>
+              {registerError && <Typography color="error">{registerError}</Typography>}
             </Grid>
             <Button
               type="submit"
